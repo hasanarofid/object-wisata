@@ -84,11 +84,12 @@
                 </div>
             </div>
 
-            <div class="row mb-5 mt-2">
+            <div class="row mb-5 mt-2" id="data-container">
                 <h5 class="my-4">Pantai Tedekat</h5>
 
                 @foreach ($model as $item)
                     <div class="col-md-4 col-lg-3 mb-3">
+                      <a href="{{ route('detail', ['id' => $item->id]) }}" class="card-link">
                         <div class="card">
                             <div class="card-body position-relative">
                                 <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill">
@@ -100,19 +101,30 @@
                                 <a href="javascript:void(0);" class="card-link">{{ $item->nama }}</a>
                             </div>
                         </div>
+                      </a>
                     </div>
                 @endforeach
 
                 
-                
 
-
-
-                 
-                
+                          
+            
+            </div>
+            
+            <div class="container text-center mt-4">
+              
+              <div class="row justify-content-center ">
+                  <div class="col-4">
+                      <hr style="border-radius: 20px; height: 4px;">
+                  </div>
+                  <div class="col-auto"> <!-- Adjust the width based on your design -->
+                    <button id="load-more" class="btn btn-primary"><i class="fa fa-angle-double-down"></i>  See More </button>
+                  </div>
+                  <div class="col-4">
+                      <hr style="border-radius: 20px; height: 4px;">
+                  </div>
               </div>
-            
-            
+          </div>
             
 
           </div>
@@ -170,4 +182,56 @@
   </div>
 
 
+@endsection
+@php
+    $detailRoute = route('detail', ['id' => ':itemId']);
+@endphp
+@section('script')
+<script>
+  $(document).ready(function () {
+      var offset = {{ count($model) }}; // Initial offset
+
+      $('#load-more').on('click', function () {
+          $.ajax({
+              url: "{{ route('load-more') }}",
+              method: 'GET',
+              data: { offset: offset },
+              success: function (response) {
+                if (response.data.length > 0) {
+                        var container = $('#data-container');
+
+                        $.each(response.data, function (index, item) {
+                            // Append new card to the container
+                            container.append(`
+                                <div class="col-md-4 col-lg-3 mb-3">
+                                  <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">
+                                    <div class="card">
+                                        <div class="card-body position-relative">
+                                            <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill">
+                                                <i class="fa-solid fa-plus-minus"></i> ${item.jarak}
+                                            </button>
+                                            <img class="img-fluid d-block" src="{{ asset('pantai/') }}/${item.gambar}" alt="${item.gambar}" style="height: 200px;">
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="javascript:void(0);" class="card-link">${item.nama}</a>
+                                        </div>
+                                    </div>
+                                  </a>
+                                </div>
+                            `);
+                        });
+
+                        offset += response.data.length;
+                    } else {
+                        // No more data
+                        $('#load-more').attr('disabled', 'disabled').text('No more data');
+                    }
+              },
+              error: function (error) {
+                  console.log('Error:', error);
+              }
+          });
+      });
+  });
+</script>
 @endsection

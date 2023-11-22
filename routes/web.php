@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'DashboardController@index')->name('home');
+Route::get('/load-more', 'DashboardController@loadMore')->name('load-more');
+Route::get('/detail/{id}', 'DashboardController@detail')->name('detail');
+
 
 Auth::routes();
 
