@@ -134,52 +134,67 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col mb-3">
-              <label for="nameWithTitle" class="form-label">Name</label>
-              <input
-                type="text"
-                id="nameWithTitle"
-                class="form-control"
-                placeholder="Enter Name" />
-            </div>
+    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCenterTitle">Cari Rekomendasi Pantai</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
           </div>
-          <div class="row g-2">
-            <div class="col mb-0">
-              <label for="emailWithTitle" class="form-label">Email</label>
-              <input
-                type="email"
-                id="emailWithTitle"
-                class="form-control"
-                placeholder="xxxx@xxx.xx" />
-            </div>
-            <div class="col mb-0">
-              <label for="dobWithTitle" class="form-label">DOB</label>
-              <input type="date" id="dobWithTitle" class="form-control" />
-            </div>
+          <form action="{{ route('cari-rekomendasi') }}" method="GET">
+          <div class="modal-body">
+
+              <div class="mb-3 row">
+                <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text"   id="biaya_masuk" name="biaya_masuk">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="html5-search-input" class="col-md-2 col-form-label">Jarak</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text"  id="jarak" name="jarak">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="html5-email-input" class="col-md-2 col-form-label">Fasilitas</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text" id="fasilitas" name="fasilitas">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="html5-url-input" class="col-md-2 col-form-label">Wahana</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text" id="wahana" name="wahana">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="html5-tel-input" class="col-md-2 col-form-label">Waktu Operasional</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="html5-password-input" class="col-md-2 col-form-label">Ulasan</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text" name="ulasn" id="html5-password-input">
+                </div>
+              </div>
+
+            
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="modal-footer">
+            </button>
+            <button type="submit" class="btn btn-primary">Cari</button>
+          </div>
+          </form>
         </div>
       </div>
     </div>
-  </div>
 
 
 @endsection

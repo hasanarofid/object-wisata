@@ -30,5 +30,12 @@ class DashboardController extends Controller
         return view('dashboard.detail',compact('model'));
     }
 
+    //carirekomendasi
+    public function carirekomendasi(Request $request){
+        // dd($request);
+        $model = Pantai::find(1);
+        return view('dashboard.hasilrekomendasi',compact('model'));
+    }
+
 
 }
