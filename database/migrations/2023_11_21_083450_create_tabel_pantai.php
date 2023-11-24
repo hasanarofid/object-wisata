@@ -24,6 +24,8 @@ class CreateTabelPantai extends Migration
             $table->string('wahana')->nullable();
             $table->string('waktu_operasional')->nullable();
             $table->string('ulasan')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
         });
     }

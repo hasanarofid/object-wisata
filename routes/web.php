@@ -19,6 +19,7 @@ Route::get('/', 'DashboardController@index')->name('home');
 Route::get('/load-more', 'DashboardController@loadMore')->name('load-more');
 Route::get('/cari-rekomendasi', 'DashboardController@carirekomendasi')->name('cari-rekomendasi');
 Route::get('/detail/{id}', 'DashboardController@detail')->name('detail');
+Route::get('/getNearestPantai', 'DashboardController@getNearestPantai')->name('pantai-terdekat');
 
 
 Auth::routes();

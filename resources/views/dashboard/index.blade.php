@@ -87,23 +87,7 @@
             <div class="row mb-5 mt-2" id="data-container">
                 <h5 class="my-4">Pantai Tedekat</h5>
 
-                @foreach ($model as $item)
-                    <div class="col-md-4 col-lg-3 mb-3">
-                      <a href="{{ route('detail', ['id' => $item->id]) }}" class="card-link">
-                        <div class="card">
-                            <div class="card-body position-relative">
-                                <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill">
-                                    <i class="fa-solid fa-plus-minus"></i> {{ $item->jarak }}
-                                </button>
-                                <img class="img-fluid d-block" src="{{ asset('pantai/' . $item->gambar) }}" alt="{{ $item->gambar }}" style="height: 200px;">
-                            </div>
-                            <div class="card-body">
-                                <a href="javascript:void(0);" class="card-link">{{ $item->nama }}</a>
-                            </div>
-                        </div>
-                      </a>
-                    </div>
-                @endforeach
+        
 
                 
 
@@ -204,6 +188,8 @@
 @section('script')
 <script>
   $(document).ready(function () {
+    loadPantaiTerdekat();
+
       var offset = {{ count($model) }}; // Initial offset
 
       $('#load-more').on('click', function () {
@@ -248,5 +234,56 @@
           });
       });
   });
+
+  function loadPantaiTerdekat(){
+    if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userLatitude = position.coords.latitude;
+                var userLongitude = position.coords.longitude;
+
+                // Send user's location to the server to get the nearest Pantai
+                $.ajax({
+                    url: "{{ route('pantai-terdekat') }}",
+                    type: 'GET',
+                    data: {
+                        userLatitude: userLatitude,
+                        userLongitude: userLongitude
+                    },
+                    success: function (nearestPantai) {
+                        // Handle the response, update UI, etc.
+                        var container = $('#data-container');
+                        $.each(nearestPantai, function (index, item) {
+                            // Append new card to the container
+                            container.append(`
+                                <div class="col-md-4 col-lg-3 mb-3">
+                                  <a href="${'{{ $detailRoute }}'.replace(':itemId', item['id'])}" class="card-link">
+                                    <div class="card">
+                                        <div class="card-body position-relative">
+                                            <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill">
+                                                <i class="fa-solid fa-plus-minus"></i> ${item['jarak']} KM
+                                            </button>
+                                            <img class="img-fluid d-block" src="{{ asset('pantai/') }}/${item['gambar']}" alt="${item['gambar']}" style="height: 200px;">
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="javascript:void(0);" class="card-link">${item['nama']}</a>
+                                        </div>
+                                    </div>
+                                  </a>
+                                </div>
+                            `);
+                        });
+
+                    },
+                    error: function (error) {
+                        console.error('Error getting nearest Pantai:', error);
+                    }
+                });
+            });
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+  }
+
+  
 </script>
 @endsection
