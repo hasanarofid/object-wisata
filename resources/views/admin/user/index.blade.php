@@ -3,6 +3,11 @@
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">User Admin /</span> Tables</h4>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
     <!-- DataTable with Buttons -->
     <div class="card">
@@ -45,7 +50,7 @@
                         <td> {{ $item->username}} </td>
                         <td> {{ $item->email }} </td>
                         <td>
-                            <div class="btn-group" role="group" aria-label="Action Buttons">
+                            <div class="btn-group" role="group" aria-label="Action Buttons"  @if($item->id == 1) style="display: none;" @endif >
                                 <a href="{{ route('user.show', $item->id) }}" class="btn btn-sm btn-info" role="button">
                                     <i class="fas fa-info-circle"></i> Detail
                                 </a>

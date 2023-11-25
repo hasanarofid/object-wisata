@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
     /**
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -36,7 +37,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!empty($request->id)){
+            $model = User::find($request->id);
+        }else{
+            $model = new User();
+        }
+        $model->name = $request->name;
+        $model->username = $request->username;
+        $model->email = $request->email;
+        if(!empty($request->password)){
+            $model->password = Hash::make($request->password);
+        }
+        $model->role = 'admin';
+        $model->save();
+        
+        return redirect()->route('user.index')->with('success', 'User created successfully');
     }
 
     /**
@@ -47,7 +62,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = User::find($id);
+        return view('admin.user.show',compact('model'));
     }
 
     /**
@@ -58,7 +74,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = User::find($id);
+        return view('admin.user.edit',compact('model'));
     }
 
     /**
@@ -81,6 +98,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = User::find($id)->delete();
+
+
+        return redirect()->route('user.index')->with('success', 'User created deleted');
+
     }
 }
