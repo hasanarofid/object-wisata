@@ -45,9 +45,10 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('pantai')->group(function () {
             Route::get('/', [App\Http\Controllers\PantaiController::class, 'index'])->name('pantai.index');
             Route::get('/create', [App\Http\Controllers\PantaiController::class, 'create'])->name('pantai.create');
-            Route::get('/show/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('pantai.show');
-            Route::get('/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('pantai.edit');
-            Route::post('/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('pantai.destroy');
+            Route::get('/show/{id}', [App\Http\Controllers\PantaiController::class, 'show'])->name('pantai.show');
+            Route::get('/edit/{id}', [App\Http\Controllers\PantaiController::class, 'edit'])->name('pantai.edit');
+            Route::delete('/destroy/{id}', [App\Http\Controllers\PantaiController::class, 'destroy'])->name('pantai.destroy');
+            Route::post('/store', [App\Http\Controllers\PantaiController::class, 'store'])->name('pantai.store');
          });
          // end route pantai
 
@@ -57,8 +58,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [App\Http\Controllers\FasilitasController::class, 'create'])->name('fasilitas.create');
             Route::get('/show/{id}', [App\Http\Controllers\FasilitasController::class, 'show'])->name('fasilitas.show');
             Route::get('/edit/{id}', [App\Http\Controllers\FasilitasController::class, 'edit'])->name('fasilitas.edit');
-            Route::post('/destroy/{id}', [App\Http\Controllers\FasilitasController::class, 'destroy'])->name('fasilitas.destroy');
-   
+            Route::delete('/destroy/{id}', [App\Http\Controllers\FasilitasController::class, 'destroy'])->name('fasilitas.destroy');
+            Route::post('/store', [App\Http\Controllers\FasilitasController::class, 'store'])->name('fasilitas.store');
          });
          // end route fasilitas
 
@@ -68,8 +69,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [App\Http\Controllers\WahanaController::class, 'create'])->name('wahana.create');
             Route::get('/show/{id}', [App\Http\Controllers\WahanaController::class, 'show'])->name('wahana.show');
             Route::get('/edit/{id}', [App\Http\Controllers\WahanaController::class, 'edit'])->name('wahana.edit');
-            Route::post('/destroy/{id}', [App\Http\Controllers\WahanaController::class, 'destroy'])->name('wahana.destroy');
-   
+            Route::delete('/destroy/{id}', [App\Http\Controllers\WahanaController::class, 'destroy'])->name('wahana.destroy');
+            Route::post('/store', [App\Http\Controllers\WahanaController::class, 'store'])->name('wahana.store');
+       
          });
          // end route wahana
 
@@ -79,8 +81,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [App\Http\Controllers\KriteriaController::class, 'create'])->name('kriteria.create');
             Route::get('/show/{id}', [App\Http\Controllers\KriteriaController::class, 'show'])->name('kriteria.show');
             Route::get('/edit/{id}', [App\Http\Controllers\KriteriaController::class, 'edit'])->name('kriteria.edit');
-            Route::post('/destroy/{id}', [App\Http\Controllers\KriteriaController::class, 'destroy'])->name('kriteria.destroy');
-   
+            Route::delete('/destroy/{id}', [App\Http\Controllers\KriteriaController::class, 'destroy'])->name('kriteria.destroy');
+            Route::post('/store', [App\Http\Controllers\KriteriaController::class, 'store'])->name('kriteria.store');
+      
          });
          // end route kriteria
 
@@ -90,8 +93,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [App\Http\Controllers\AlternatifController::class, 'create'])->name('alternatif.create');
             Route::get('/show/{id}', [App\Http\Controllers\AlternatifController::class, 'show'])->name('alternatif.show');
             Route::get('/edit/{id}', [App\Http\Controllers\AlternatifController::class, 'edit'])->name('alternatif.edit');
-            Route::post('/destroy/{id}', [App\Http\Controllers\AlternatifController::class, 'destroy'])->name('alternatif.destroy');
-         });
+            Route::delete('/destroy/{id}', [App\Http\Controllers\AlternatifController::class, 'destroy'])->name('alternatif.destroy');
+            Route::post('/store', [App\Http\Controllers\AlternatifController::class, 'store'])->name('alternatif.store');
+        });
          // end route alternatif
 
 

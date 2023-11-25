@@ -25,7 +25,9 @@ class PantaiController extends Controller
      */
     public function create()
     {
-        //
+        $model = new Pantai();
+        return view('admin.pantai.create',compact('model'));
+
     }
 
     /**
