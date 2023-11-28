@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('styles')
-    <!-- Additional CSS files -->
-    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/swiper/swiper.css') }}" />
-    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/css/pages/ui-carousel.css') }}" />
+@section('style')
+<link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+<link rel="stylesheet" href="{{ asset('theme//assets/vendor/libs/tagify/tagify.css') }}" />
 @endsection
 <style>
   /* Add this to your CSS stylesheet or in a <style> tag in your HTML */
@@ -135,19 +135,31 @@
               <div class="mb-3 row">
                 <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="text"   id="biaya_masuk" name="biaya_masuk">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
+                      <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
+                    </div>
+                   
+                  </div>
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-search-input" class="col-md-2 col-form-label">Jarak</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="text"  id="jarak" name="jarak">
+                  <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
+                  <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-email-input" class="col-md-2 col-form-label">Fasilitas</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="text" id="fasilitas" name="fasilitas">
+                  <input
+                            id="TagifyCustomInlineSuggestion"
+                            name="TagifyCustomInlineSuggestion"
+                            class="form-control"
+                            placeholder="select technologies"
+                            value="css, html, javascript" />
                 </div>
               </div>
               <div class="mb-3 row">
@@ -186,8 +198,21 @@
     $detailRoute = route('detail', ['id' => ':itemId']);
 @endphp
 @section('script')
+<script src="{{ asset('theme/assets/vendor/libs/select2/select2.js') }}"></script>
+<script src="{{ asset('theme/assets/vendor/libs/tagify/tagify.js') }}"></script>
+<script src="{{ asset('theme/assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
+<script src="{{ asset('theme/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+<script src="{{ asset('theme/assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+
+
+
+<!-- Page JS -->
+<script src="{{ asset('theme/assets/js/forms-selects.js') }}"></script>
+
+
 <script>
   $(document).ready(function () {
+    $('#fasilitas').select2();
     loadPantaiTerdekat();
 
       var offset = {{ count($model) }}; // Initial offset

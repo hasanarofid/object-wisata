@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fasilitas;
 use Illuminate\Http\Request;
 use App\Models\Pantai;
+use App\Models\Wahana;
+
 class DashboardController extends Controller
 {
     //index
     public function index()
     {
         $model = Pantai::limit(4)->get();
-        return view('dashboard.index',compact('model'));
+        $fasilitas = Fasilitas::all();
+        $wahana = Wahana::all();
+
+        return view('dashboard.index',compact('model','fasilitas','wahana'));
     }
     
     //load more card pantai

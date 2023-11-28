@@ -39,10 +39,11 @@
 
     <!-- Helpers -->
     <script src="{{ asset('theme/assets/vendor/js/helpers.js') }}" ></script>
-    <script src="{{ asset('theme/assets/vendor/js/template-customizer.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('theme/assets/js/config.js') }}" ></script>
+
+  
     @yield('styles')
   </head>
 
@@ -105,7 +106,7 @@
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="{{ asset('theme/assets/js/main.js') }}" ></script>
+
 
 
     <script src="{{ asset('theme/assets/vendor/libs/i18n/i18n.js') }}" ></script>
@@ -123,7 +124,7 @@
     <!-- Page JS -->
     <script src="{{ asset('theme/assets/js/ui-carousel.js') }}" ></script>
 
-
+  
     <!-- Page JS -->
     @yield('script')
 
