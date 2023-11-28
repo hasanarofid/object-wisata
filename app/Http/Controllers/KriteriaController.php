@@ -25,7 +25,7 @@ class KriteriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.kriteria.create');
     }
 
     /**
@@ -36,7 +36,20 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!empty($request->id)){
+            $model = Kriteria::find($request->id);
+        }else{
+            $model = new Kriteria();
+        }
+        $model->kriteria = $request->kriteria;
+        $model->difinisi = $request->difinisi;
+        $model->parameter = $request->parameter;
+        $model->nilai = $request->nilai;
+        $model->prioritas = $request->prioritas;
+        $model->save();
+        
+        return redirect()->route('kriteria.index')->with('success', 'Kriteria created successfully');
+
     }
 
     /**

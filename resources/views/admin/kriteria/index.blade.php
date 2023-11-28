@@ -3,6 +3,12 @@
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">Kriteria /</span> Tables</h4>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 
     <!-- DataTable with Buttons -->
     <div class="card">
@@ -30,6 +36,10 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
+                    <th>Definisi</th>
+                    <th>Parameter</th>
+                    <th>Nilai</th>
+                    <th>Skala</th>
                     <th>Action</th>
                 </tr>
               </thead>
@@ -40,7 +50,11 @@
                 @foreach ($model as $item)
                     <tr>
                         <td>{{ $no++ }}</td>
-                        <td> {{ $item->nama}} </td>
+                        <td> {{ $item->kriteria}} </td>
+                        <td> {{ $item->difinisi}} </td>
+                        <td> {{ !empty($item->parameter) ? $item->parameter  : '-' }} </td>
+                        <td> {{ !empty($item->nilai) ? $item->nilai  : '-' }} </td>
+                        <td> {{ !empty($item->prioritas) ? $item->prioritas  : '-' }} </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Action Buttons">
                                 <a href="{{ route('kriteria.show', $item->id) }}" class="btn btn-sm btn-info" role="button">

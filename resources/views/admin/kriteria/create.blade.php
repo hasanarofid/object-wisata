@@ -2,37 +2,49 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">User Admin /</span> Add User</h4>
+    <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">Kriteria /</span> Add User</h4>
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
-            <form action="{{ route('user.store') }}" method="POST">
+            <form action="{{ route('kriteria.store') }}" method="POST">
                 @csrf
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Nama</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Nama Kreteria</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="name" required  id="html5-text-input">
+              <input class="form-control" type="text" name="kriteria" required  id="kriteria">
             </div>
           </div>
           <div class="mb-3 row">
-          <label for="html5-text-input" class="col-md-2 col-form-label">Username</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Definisi</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="username" required  id="html5-text-input">
+              <input class="form-control" type="text" name="difinisi"   id="difinisi">
             </div>
           </div>
 
           <div class="mb-3 row">
-            <label for="html5-email-input" class="col-md-2 col-form-label">Email</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Parameter</label>
             <div class="col-md-10">
-              <input class="form-control" type="email" name="email"  id="html5-email-input">
+              <input class="form-control" type="text" name="parameter"   id="parameter">
             </div>
           </div>
+
           <div class="mb-3 row">
-            <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Nilai</label>
             <div class="col-md-10">
-              <input class="form-control" type="password" name="password" id="html5-password-input">
+              <input class="form-control" type="text" name="nilai"   id="nilai">
             </div>
           </div>
+
+
+          <div class="mb-3 row">
+            <label for="html5-text-input" class="col-md-2 col-form-label">Skala Prioritas </label>
+            <div class="col-md-10">
+              <input class="form-control" type="text" name="prioritas"   id="prioritas">
+            </div>
+          </div>
+          
+
+
 
           <div class="pt-4">
             <button type="reset" class="btn btn-label-secondary waves-effect">Cancel</button>
