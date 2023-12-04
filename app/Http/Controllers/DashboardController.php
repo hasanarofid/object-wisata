@@ -38,9 +38,41 @@ class DashboardController extends Controller
 
     //carirekomendasi
     public function carirekomendasi(Request $request){
-        // dd($request);
-        $model = Pantai::find(1);
-        return view('dashboard.hasilrekomendasi',compact('model'));
+        // dd($request); belum dilakukan filter pencarian
+        $userLatitude = $request->input('userLatitude');
+        $userLongitude = $request->input('userLongitude');
+        $datapantai = [];
+        $data = Pantai::get(); // Your Pantai data array here;
+        foreach($data as $value){
+            $datapantai[] = array(
+                'id'=>$value->id,
+                'nama'=>$value->nama,
+                'biaya_masuk'=>$value->biaya_masuk,
+                'fasilitas'=>$value->fasilitas,
+                'wahana'=>$value->wahana,
+                'waktu_operasional'=>$value->waktu_operasional,
+                'latitude'=>$value->latitude,
+                'longitude'=>$value->longitude,
+            );
+        }
+
+        // Calculate the nearest Pantai
+        $nearestPantai = $this->calculateNearestPantai($datapantai, $userLatitude, $userLongitude);
+        // dd($nearestPantai);
+        foreach ($datapantai as &$pantai) {
+            $pantai['jarak'] = $this->calculateDistance(
+                $userLatitude,
+                $userLongitude,
+                $pantai['latitude'],
+                $pantai['longitude']
+            );
+        }
+        usort($datapantai, function ($a, $b) {
+            return $a['jarak'] <=> $b['jarak'];
+        });
+
+
+        return view('dashboard.hasilrekomendasi',compact('datapantai'));
     }
 
     // load pantai terdekat

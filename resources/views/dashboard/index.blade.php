@@ -130,8 +130,10 @@
           </div>
           <form action="{{ route('cari-rekomendasi') }}" method="GET">
           <div class="modal-body">
-
               <div class="mb-3 row">
+                <input type="hidden" id="userLatitude" name="userLatitude">
+<input type="hidden" id="userLongitude" name="userLongitude">
+
                 <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
                 <div class="col-md-10">
                   <div class="form-group row">
@@ -271,6 +273,8 @@
             navigator.geolocation.getCurrentPosition(function (position) {
                 var userLatitude = position.coords.latitude;
                 var userLongitude = position.coords.longitude;
+                $("#userLatitude").val(userLatitude);
+                $("#userLongitude").val(userLongitude);
 
                 // Send user's location to the server to get the nearest Pantai
                 $.ajax({
