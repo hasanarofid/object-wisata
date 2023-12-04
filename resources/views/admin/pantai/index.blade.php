@@ -23,7 +23,12 @@
               </div>
             </div>
             
-           
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        
             
             <table class="datatables-basic table dataTable no-footer dtr-column" id="data_tabel"  style="width: 961px;">
               <thead>

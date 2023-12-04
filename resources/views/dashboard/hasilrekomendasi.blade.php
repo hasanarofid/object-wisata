@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .vertical-center {
+    vertical-align: middle;
+}
+</style>
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
         <div class="col-md-6">
@@ -20,56 +25,39 @@
                 padding-bottom: 5px;">Hasil Rekomendasi </p> </h4>
         
                 <div class="card">
-                    <div class="row g-0">
-                        <div class="col-md-6">
-                            <img src="{{ asset('pantai/' . $model->gambar) }}" alt="{{ $model->nama }}" class="img-fluid m-3" style="height: 400px;">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                  <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label" for="basic-default-name">Biaya Masuk</label>
-                                    <div class="col-sm-8">
-                                        <p class="card-text col-form-label">{{ $model->biaya_masuk }}</p>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label" for="basic-default-name">Jarak</label>
-                                    <div class="col-sm-8">
-                                        <p class="card-text col-form-label">{{ $model->jarak }}</p>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label" for="basic-default-name">Fasilitas</label>
-                                    <div class="col-sm-8">
-                                        <p class="card-text col-form-label">{{ $model->fasilitas }}</p>
-                                    </div>
-                                  </div>
-                                  <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label" for="basic-default-name">Wahana</label>
-                                    <div class="col-sm-8">
-                                        <p class="card-text col-form-label">{{ $model->fasilitas }}</p>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label" for="basic-default-name">Waktu Operasional</label>
-                                    <div class="col-sm-8">
-                                        <p class="card-text col-form-label">{{ $model->fasilitas }}</p>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label" for="basic-default-name">Ulasan</label>
-                                    <div class="col-sm-8">
-                                        <p class="card-text col-form-label">{{ $model->fasilitas }}</p>
-                                    </div>
-                                  </div>
+                    <div class="row g-0 table-responsive" >
+                        <p>Tabel Perhitungan</p>
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th rowspan="3" class="text-center vertical-center">No</th>
+                                    <th rowspan="3" class="text-center vertical-center">Alternatif</th>
+                                    <th colspan="12">Kriteria</th>
                                   
-                              </div>
+                                    <th rowspan="3" class="text-center vertical-center">Link Maps</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" rowspan="2" class="text-center vertical-center">Biaya Masuk</th>
+                                    <th  colspan="2" rowspan="2" class="text-center vertical-center">Jarak</th>
+                                    <th colspan="2" class="text-center vertical-center">Fasilitas</th>
+                                    <th colspan="2" class="text-center vertical-center">Wahana</th>
+                                    <th colspan="2" class="text-center vertical-center">Waktu Operasional</th>
+                                    <th colspan="2" rowspan="2" class="text-center vertical-center">Ulasan</th>
 
-                        </div>
+
+                                </tr>
+                                <tr>
+                                    <th>Yang Tersedia</th>
+                                    <th>Nilai Parameter</th>
+                                    <th>Yang Tersedia</th>
+                                    <th>Nilai Parameter</th>
+                                    <th class="text-center vertical-center">Pukul</th>
+                                    <th class="text-center vertical-center">Total (jam)</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                      
                     </div>
                 </div>
         

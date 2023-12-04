@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fasilitas;
 use App\Models\Pantai;
+use App\Models\Wahana;
 use Illuminate\Http\Request;
 
 class PantaiController extends Controller
@@ -26,7 +28,9 @@ class PantaiController extends Controller
     public function create()
     {
         $model = new Pantai();
-        return view('admin.pantai.create',compact('model'));
+        $fasilitas = Fasilitas::all();
+        $wahana = Wahana::all();
+        return view('admin.pantai.create',compact('model','fasilitas','wahana'));
 
     }
 
@@ -38,7 +42,31 @@ class PantaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $image = $request->file('gambar');
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('pantai'), $imageName);
+
+        $facilities = $request->input('fasilitas');
+        $wahanas = $request->input('wahana');
+
+    // Convert the array of facility IDs to a string
+    $fasilitasString = implode(',', $facilities);
+    $wahanastring = implode(',', $wahanas);
+        $model = new Pantai();
+        $model->gambar = $imageName;
+        $model->nama = $request->nama;
+        $model->lokasi = $request->lokasi;
+        $model->biaya_masuk = $request->biaya_masuk;
+        $model->latitude = $request->latitude;
+        $model->longitude = $request->longitude;
+        $model->fasilitas = $fasilitasString;
+        $model->wahana = $wahanastring;
+        $model->waktu_operasional = $request->input('jam_awal') .' - '.$request->input('jam_akhir');
+        $model->save();
+        return redirect()->route('pantai.index')->with('success', 'pantai created successfully');
+
+
     }
 
     /**

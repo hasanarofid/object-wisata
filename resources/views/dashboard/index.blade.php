@@ -1,9 +1,4 @@
 @extends('layouts.app')
-@section('style')
-<link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/select2/select2.css') }}" />
-<link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
-<link rel="stylesheet" href="{{ asset('theme//assets/vendor/libs/tagify/tagify.css') }}" />
-@endsection
 <style>
   /* Add this to your CSS stylesheet or in a <style> tag in your HTML */
 
@@ -37,8 +32,12 @@
 }
 
 </style>
+@section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+
+@endsection
 @section('content')
- 
+
 
           <!--/ Content -->
           <div class="container-xxl flex-grow-1 container-p-y">
@@ -95,7 +94,7 @@
             
             </div>
             
-            <div class="container text-center mt-4">
+            {{-- <div class="container text-center mt-4">
               
               <div class="row justify-content-center ">
                   <div class="col-4">
@@ -108,7 +107,7 @@
                       <hr style="border-radius: 20px; height: 4px;">
                   </div>
               </div>
-          </div>
+          </div> --}}
             
 
           </div>
@@ -135,37 +134,50 @@
               <div class="mb-3 row">
                 <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
                 <div class="col-md-10">
-                  <div class="form-row">
-                    <div class="form-group col-md-12">
-                      <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
-                      <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
-                    </div>
-                   
+                  <div class="form-group row">
+                      <div class="col-md-6">
+                          <input class="form-control" type="text" name="biaya_masuk1" required id="biaya_masuk1" placeholder="dari">
+                      </div>
+                      <div class="col-md-6">
+                          <input class="form-control" type="text" name="biaya_masuk2" required id="biaya_masuk2" placeholder="sampai">
+                      </div>
                   </div>
-                </div>
+              </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-search-input" class="col-md-2 col-form-label">Jarak</label>
                 <div class="col-md-10">
-                  <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
-                  <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="jarak1" required id="jarak1" placeholder="dari">
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="jarak2" required id="jarak2" placeholder="sampai">
+                    </div>
+                </div>
+
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-email-input" class="col-md-2 col-form-label">Fasilitas</label>
                 <div class="col-md-10">
-                  <input
-                            id="TagifyCustomInlineSuggestion"
-                            name="TagifyCustomInlineSuggestion"
-                            class="form-control"
-                            placeholder="select technologies"
-                            value="css, html, javascript" />
+                  <select name="fasilitas[]" id="fasilitas" class="form-control select2" multiple="multiple">
+                    @foreach ($fasilitas as $item)
+                        <option value="{{ $item->id }}"> {{ $item->nama }} </option>
+                    @endforeach
+                  </select>
+                 
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-url-input" class="col-md-2 col-form-label">Wahana</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="text" id="wahana" name="wahana">
+                  <select name="wahana[]" id="wahana" class="form-control select2" multiple="multiple">
+                    @foreach ($wahana as $item)
+                        <option value="{{ $item->id }}"> {{ $item->nama }} </option>
+                    @endforeach
+                  </select>
+
                 </div>
               </div>
               <div class="mb-3 row">
@@ -198,21 +210,15 @@
     $detailRoute = route('detail', ['id' => ':itemId']);
 @endphp
 @section('script')
-<script src="{{ asset('theme/assets/vendor/libs/select2/select2.js') }}"></script>
-<script src="{{ asset('theme/assets/vendor/libs/tagify/tagify.js') }}"></script>
-<script src="{{ asset('theme/assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
-<script src="{{ asset('theme/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
-<script src="{{ asset('theme/assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
 <!-- Page JS -->
-<script src="{{ asset('theme/assets/js/forms-selects.js') }}"></script>
 
 
 <script>
   $(document).ready(function () {
-    $('#fasilitas').select2();
+    $('.select2').select2();
     loadPantaiTerdekat();
 
       var offset = {{ count($model) }}; // Initial offset

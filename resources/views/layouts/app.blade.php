@@ -10,7 +10,6 @@
       <title>SIROWP SERGAI</title>
 
     <meta name="description" content="" />
-
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('theme/assets/img/favicon/favicon.ico') }}" />
 
@@ -34,17 +33,22 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/node-waves/node-waves.css') }}" />
+    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{ asset('theme/assets/vendor/js/helpers.js') }}" ></script>
+    <script src="{{ asset('theme/assets/vendor/js/helpers.js') }}"></script>
+
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('theme/assets/js/config.js') }}" ></script>
+    <script src="{{ asset('theme/assets/js/config.js') }}"></script>
 
-  
-    @yield('styles')
+    @yield('css')
   </head>
 
 
@@ -92,41 +96,27 @@
   <!-- Drag Target Area To SlideIn Menu On Small Screens -->
   <div class="drag-target"></div>
    
-    <script src="{{ asset('theme/assets/vendor/libs/jquery/jquery.js') }}" ></script>
-    <script src="{{ asset('theme/assets/vendor/libs/popper/popper.js') }}" ></script>
-    <script src="{{ asset('theme/assets/vendor/js/bootstrap.js') }}" ></script>
-    <script src="{{ asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}" ></script>
-    <script src="{{ asset('theme/assets/vendor/libs/node-waves/node-waves.js') }}" ></script>
+  <script src="{{ asset('theme/assets/vendor/libs/jquery/jquery.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/libs/popper/popper.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/js/bootstrap.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
 
-    <script src="{{ asset('theme/assets/vendor/libs/hammer/hammer.js') }}" ></script>
+  <script src="{{ asset('theme/assets/vendor/libs/hammer/hammer.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/libs/i18n/i18n.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
 
-    <script src="{{ asset('theme/assets/vendor/js/menu.js') }}" ></script>
-    <!-- endbuild -->
+  <script src="{{ asset('theme/assets/vendor/js/menu.js') }}"></script>
+  <!-- endbuild -->
 
-    <!-- Vendors JS -->
+  <!-- Vendors JS -->
+  <script src="{{ asset('theme/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+  <script src="{{ asset('theme/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 
-    <!-- Main JS -->
-
-
-
-    <script src="{{ asset('theme/assets/vendor/libs/i18n/i18n.js') }}" ></script>
-    <script src="{{ asset('theme/assets/vendor/libs/typeahead-js/typeahead.js') }}" ></script>
-
-  
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="{{ asset('theme/assets/vendor/libs/swiper/swiper.js') }}" ></script>
-
-    <!-- Main JS -->
-   
-
-    <!-- Page JS -->
-    <script src="{{ asset('theme/assets/js/ui-carousel.js') }}" ></script>
-
-  
-    <!-- Page JS -->
-    @yield('script')
+  <!-- Main JS -->
+ 
+  <!-- Page JS -->
+  @yield('script')
 
 
 </body>
