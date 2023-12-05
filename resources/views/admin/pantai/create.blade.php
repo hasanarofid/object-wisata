@@ -14,8 +14,10 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Foto</label>
             <div class="col-md-10">
-              <input type="file" name="gambar" id="gambar" class="form-control">
 
+              <input type="file" name="gambar[]" id="gambar" class="form-control-file" multiple accept="image/*">
+              <br>
+              <div id="previewImages" class="mt-4"></div>
             </div>
           </div>
 
@@ -115,6 +117,31 @@
 
 <script>
  $(document).ready(function() {
+  $('#gambar').on('change', function() {
+    displayImagePreview(this);
+  });
+
+  // Function to display image preview
+  function displayImagePreview(input) {
+    var previewContainer = $('#previewImages');
+    previewContainer.empty();
+
+    if (input.files) {
+      var filesAmount = input.files.length;
+      
+      for (var i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('<img>').attr('src', e.target.result).addClass('img-thumbnail mr-2 mb-2').appendTo(previewContainer);
+        }
+
+        reader.readAsDataURL(input.files[i]);
+      }
+    }
+  }
+
+
         $('.select2').select2();
     });
 </script>

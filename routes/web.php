@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\PantaiController::class, 'edit'])->name('pantai.edit');
             Route::delete('/destroy/{id}', [App\Http\Controllers\PantaiController::class, 'destroy'])->name('pantai.destroy');
             Route::post('/store', [App\Http\Controllers\PantaiController::class, 'store'])->name('pantai.store');
+            Route::post('/update/{id}', [App\Http\Controllers\PantaiController::class, 'update'])->name('pantai.update');
+
          });
          // end route pantai
 

@@ -49,14 +49,51 @@
                     $no = 1;
                 @endphp
                 @foreach ($model as $item)
+               
                     <tr>
                         <td>{{ $no++ }}</td>
-                        <td><img class="img-fluid d-block" src="{{ asset('pantai/' . $item->gambar) }}" alt="{{ $item->gambar }}" width="100px" > </td>
+                        
+                        <td>
+                          @php
+                            $colors = ['#FF5733', '#33FF57', '#3357FF', '#57FF33', '#5733FF']; // Array of colors
+                $gambarArray = json_decode($item->gambar);
+
+                $fasilitasString = $item->fasilitas;
+                                    $wahanaString = $item->wahana;
+                    $fasilitasArray = explode(",", $fasilitasString);
+                    $wahanaArray = explode(",", $wahanaString);
+                    $facilities = \App\Models\Fasilitas::whereIn('id', $fasilitasArray)->get();
+                    $wahanas = \App\Models\Wahana::whereIn('id', $wahanaArray)->get();
+                    
+            @endphp
+                          @if(is_array($gambarArray))
+                        @foreach ($gambarArray as $image)
+                            <img class="img-fluid d-block" src="{{ asset('pantai/' . $image) }}" alt="{{ $image }}" width="100px">
+                        @endforeach
+                    @else
+                        <img class="img-fluid d-block" src="{{ asset('pantai/' . $item->gambar) }}" alt="{{ $item->gambar }}" width="100px">
+                    @endif
+                       </td>
                         <td> {{ $item->nama}} </td>
                         <td> {{ $item->lokasi }} </td>
-                        <td> {{ $item->biaya_masuk }} </td>
-                        <td> {{ $item->fasilitas }} </td>
-                        <td> {{ $item->wahana }} </td>
+                        <td> {{ $item->biaya_masuk }} </td> 
+                        <td>  @foreach ($facilities as $index => $fas)
+                          @php
+                              $colorIndex = $index % count($colors); // Use modulo to cycle through colors
+                              $color = $colors[$colorIndex]; // Get the color for this iteration
+                          @endphp
+                      
+                              <a href="#" class="btn btn-sm btn-default" style="background-color: {{ $color }};color:white;">{{ $fas->nama}}</a>
+                          @endforeach
+                         </td>
+                        <td> @foreach ($wahanas as $index => $fas)
+                          @php
+                              $colorIndex = $index % count($colors); // Use modulo to cycle through colors
+                              $color = $colors[$colorIndex]; // Get the color for this iteration
+                          @endphp
+                      
+                              <a href="#" class="btn btn-sm btn-default" style="background-color: {{ $color }};color:white;">{{ $fas->nama}}</a>
+                          @endforeach </td>
                         <td> {{ $item->waktu_operasional }} </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Action Buttons">

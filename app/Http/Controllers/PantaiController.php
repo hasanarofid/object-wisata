@@ -42,10 +42,10 @@ class PantaiController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $image = $request->file('gambar');
-        $imageName = time().'.'.$image->extension();
-        $image->move(public_path('pantai'), $imageName);
+        // dd( $request->file('gambar'));
+        // $image = $request->file('gambar');
+        // $imageName = time().'.'.$image->extension();
+        // $image->move(public_path('pantai'), $imageName);
 
         $facilities = $request->input('fasilitas');
         $wahanas = $request->input('wahana');
@@ -53,17 +53,41 @@ class PantaiController extends Controller
     // Convert the array of facility IDs to a string
     $fasilitasString = implode(',', $facilities);
     $wahanastring = implode(',', $wahanas);
-        $model = new Pantai();
-        $model->gambar = $imageName;
-        $model->nama = $request->nama;
-        $model->lokasi = $request->lokasi;
-        $model->biaya_masuk = $request->biaya_masuk;
-        $model->latitude = $request->latitude;
-        $model->longitude = $request->longitude;
-        $model->fasilitas = $fasilitasString;
-        $model->wahana = $wahanastring;
-        $model->waktu_operasional = $request->input('jam_awal') .' - '.$request->input('jam_akhir');
-        $model->save();
+        // $model = new Pantai();
+        // $model->gambar = $imageName;
+        // $model->nama = $request->nama;
+        // $model->lokasi = $request->lokasi;
+        // $model->biaya_masuk = $request->biaya_masuk;
+        // $model->latitude = $request->latitude;
+        // $model->longitude = $request->longitude;
+        // $model->fasilitas = $fasilitasString;
+        // $model->wahana = $wahanastring;
+        // $model->waktu_operasional = $request->input('jam_awal') .' - '.$request->input('jam_akhir');
+        // $model->save();
+
+        $pantai = Pantai::create([
+            'nama' => $request->nama,
+            'lokasi' => $request->lokasi,
+            'biaya_masuk' => $request->biaya_masuk,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'fasilitas' => $fasilitasString,
+            'wahana' => $wahanastring,
+            'waktu_operasional' =>$request->input('jam_awal') .' - '.$request->input('jam_akhir'),
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $imagePaths = [];
+
+            foreach ($request->file('gambar') as $key=> $image) {
+                $imageName =time().$key.'.'.$image->extension();
+                $image->move(public_path('pantai'), $imageName);
+                $imagePaths[] = $imageName;
+            }
+
+            $pantai->update(['gambar' => $imagePaths]);
+        }
+
         return redirect()->route('pantai.index')->with('success', 'pantai created successfully');
 
 
@@ -77,7 +101,10 @@ class PantaiController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Pantai::find($id);
+        $fasilitas = Fasilitas::all();
+        $wahana = Wahana::all();
+        return view('admin.pantai.show',compact('model','fasilitas','wahana'));
     }
 
     /**
@@ -88,7 +115,10 @@ class PantaiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = Pantai::find($id);
+        $fasilitas = Fasilitas::all();
+        $wahana = Wahana::all();
+        return view('admin.pantai.edit',compact('model','fasilitas','wahana'));
     }
 
     /**
@@ -100,7 +130,7 @@ class PantaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -111,6 +141,10 @@ class PantaiController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $model = Pantai::find($id)->delete();
+
+
+        return redirect()->route('pantai.index')->with('success', 'Pantai created deleted');
     }
 }

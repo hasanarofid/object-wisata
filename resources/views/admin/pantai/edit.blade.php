@@ -9,28 +9,43 @@
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
-            <form action="{{ route('pantai.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('pantai.update',['id'=>$model->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @php
+                    
+                    $gambarArray = json_decode($model->gambar);
+                @endphp
                 <input type="hidden" name="id" id="id" value="{{ $model->id }}">
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Foto</label>
-            <div class="col-md-10">
-              <input type="file" name="gambar" id="gambar" class="form-control">
-
-            </div>
-          </div>
+                <div class="mb-3 row">
+                  <label for="html5-text-input" class="col-md-2 col-form-label">Foto</label>
+                  <div class="col-md-10">
+      
+                    <input type="file" name="gambar[]" id="gambar" class="form-control-file" multiple accept="image/*">
+                    <br>
+                    <div id="previewImages" class="mt-4">
+                      @if(is_array($gambarArray))
+                      @foreach ($gambarArray as $image)
+                          <img class="img-fluid d-block" src="{{ asset('pantai/' . $image) }}" alt="{{ $image }}" width="100px">
+                          @endforeach
+                      @else
+                          <img class="img-fluid d-block" src="{{ asset('pantai/' . $model->gambar) }}" alt="{{ $model->gambar }}" width="100px">
+                      @endif
+                    </div>
+                  </div>
+                </div>
+      
 
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Nama</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="nama" required  id="html5-text-input">
+              <input class="form-control" type="text" name="nama" required  id="html5-text-input" value="{{ $model->nama }}">
             </div>
           </div>
 
           <div class="mb-3 row">
           <label for="html5-text-input" class="col-md-2 col-form-label">Lokasi</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="lokasi" required  id="lokasi">
+              <input class="form-control" type="text" name="lokasi" required  id="lokasi" value="{{ $model->lokasi }}">
             </div>
           </div>
 
@@ -39,10 +54,10 @@
             <div class="col-md-10">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <input class="form-control" type="text" name="latitude" required id="latitude" placeholder="Latitude">
+                        <input class="form-control" type="text" name="latitude" required id="latitude" placeholder="Latitude" value="{{ $model->latitude }}">
                     </div>
                     <div class="col-md-6">
-                        <input class="form-control" type="text" name="longitude" required id="longitude" placeholder="Longitude">
+                        <input class="form-control" type="text" name="longitude" required id="longitude" placeholder="Longitude" value="{{ $model->longitude }}">
                     </div>
                 </div>
             </div>
@@ -51,16 +66,28 @@
         <div class="mb-3 row">
           <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="biaya_masuk" required  id="biaya_masuk">
+              <input class="form-control" type="text" name="biaya_masuk" required  id="biaya_masuk"  value="{{ $model->biaya_masuk }}">
             </div>
         </div>
 
         <div class="mb-3 row">
+          @php
+    
+
+     @endphp
           <label for="html5-text-input" class="col-md-2 col-form-label">Fasilitas</label>
             <div class="col-md-10">
               <select class="form-control select2" name="fasilitas[]" id="fasilitas" multiple="multiple">
                 @foreach ($fasilitas as $item)
-                      <option value="{{ $item->id }}"> {{ $item->nama }} </option>
+               @php
+                      $fasilitasString = $model->fasilitas ?? ''; // Ensure it's not null
+    $decodedFasilitas = explode(',', $fasilitasString);
+    $selected = in_array($item->id, $decodedFasilitas);
+
+               @endphp
+            <option value="{{ $item->id }}" @if($selected) selected @endif>
+                {{ $item->nama }}
+            </option>
                 @endforeach
               </select>
 
@@ -72,22 +99,30 @@
             <div class="col-md-10">
               <select class="form-control select2" name="wahana[]" id="wahana" multiple="multiple">
                 @foreach ($wahana as $item)
-                      <option value="{{ $item->id }}"> {{ $item->nama }} </option>
+                @php
+                $wahanaString = $model->fasilitas ?? ''; // Ensure it's not null
+$decodedWahana = explode(',', $wahanaString);
+$selected = in_array($item->id, $decodedWahana);
+
+         @endphp
+                      <option value="{{ $item->id }}" @if($selected) selected @endif> {{ $item->nama }} </option>
                 @endforeach
               </select>
 
             </div>
         </div>
-
+        @php
+            $waktu = explode(' - ',$model->waktu_operasional);
+        @endphp
         <div class="mb-3 row">
           <label for="html5-text-input" class="col-md-2 col-form-label">Waktu Operasional</label>
           <div class="col-md-10">
               <div class="form-group row">
                   <div class="col-md-6">
-                      <input class="form-control" type="text" name="jam_awal" required id="jam_awal" placeholder="dari">
+                      <input class="form-control" type="text" name="jam_awal" required id="jam_awal" value="{{ $waktu[0] }}" placeholder="dari">
                   </div>
                   <div class="col-md-6">
-                      <input class="form-control" type="text" name="jam_akhir" required id="jam_akhir" placeholder="sampai">
+                      <input class="form-control" type="text" name="jam_akhir" required id="jam_akhir" value="{{ $waktu[1] }}" placeholder="sampai">
                   </div>
               </div>
           </div>
