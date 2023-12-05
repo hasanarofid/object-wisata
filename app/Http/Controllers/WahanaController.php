@@ -25,8 +25,8 @@ class WahanaController extends Controller
      */
     public function create()
     {
-        //
-    }
+        return view('admin.wahana.create');
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +36,17 @@ class WahanaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!empty($request->id)){
+            $model = Wahana::find($request->id);
+
+        }else{
+            $model = new Wahana();
+
+        }
+        $model->nama = $request->nama;
+        $model->save();
+        return redirect()->route('wahana.index')->with('success', 'Wahana updated successfully');
+
     }
 
     /**
@@ -47,7 +57,10 @@ class WahanaController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Wahana::find($id);
+        return view('admin.wahana.show',compact('model'));
+
+
     }
 
     /**
@@ -58,7 +71,8 @@ class WahanaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = Wahana::find($id);
+        return view('admin.wahana.edit',compact('model'));
     }
 
     /**
@@ -81,6 +95,10 @@ class WahanaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Wahana::find($id)->delete();
+
+
+        return redirect()->route('wahana.index')->with('success', 'wahana created deleted');
+
     }
 }

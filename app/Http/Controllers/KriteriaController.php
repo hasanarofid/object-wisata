@@ -60,7 +60,8 @@ class KriteriaController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Kriteria::find($id);
+        return view('admin.kriteria.show',compact('model'));
     }
 
     /**
@@ -71,7 +72,8 @@ class KriteriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = Kriteria::find($id);
+        return view('admin.kriteria.edit',compact('model'));
     }
 
     /**
@@ -94,6 +96,10 @@ class KriteriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Kriteria::find($id)->delete();
+
+
+        return redirect()->route('kriteria.index')->with('success', 'kriteria created deleted');
+
     }
 }

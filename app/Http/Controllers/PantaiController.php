@@ -130,7 +130,46 @@ class PantaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        $facilities = $request->input('fasilitas');
+        $wahanas = $request->input('wahana');
+
+    // Convert the array of facility IDs to a string
+    $fasilitasString = implode(',', $facilities);
+    $wahanastring = implode(',', $wahanas);
+        $pantai = Pantai::findOrFail($id); // Ganti $id dengan ID yang sesuai
+
+        // Meng-update atribut-atribut yang diinginkan
+        $pantai->nama = $request->nama;
+        $pantai->lokasi = $request->lokasi;
+        $pantai->biaya_masuk = $request->biaya_masuk;
+        $pantai->latitude = $request->latitude;
+        $pantai->longitude = $request->longitude;
+        $pantai->fasilitas = $fasilitasString;
+        $pantai->wahana = $wahanastring;
+        $pantai->waktu_operasional = $request->input('jam_awal') . ' - ' . $request->input('jam_akhir');
+        
+        // Menyimpan perubahan pada data Pantai
+        $pantai->save();
+        
+        // Melakukan update gambar jika ada file yang diunggah
+        if ($request->hasFile('gambar')) {
+            $imagePaths = [];
+        
+            foreach ($request->file('gambar') as $key => $image) {
+                $imageName = time() . $key . '.' . $image->extension();
+                $image->move(public_path('pantai'), $imageName);
+                $imagePaths[] = $imageName;
+            }
+        
+            // Meng-update gambar pada data Pantai
+            $pantai->gambar = $imagePaths;
+            // dd($pantai->gambar);die;
+            $pantai->save();
+        }
+
+        return redirect()->route('pantai.index')->with('success', 'pantai updated successfully');
+
+
     }
 
     /**

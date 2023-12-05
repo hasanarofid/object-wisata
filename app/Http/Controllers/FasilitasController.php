@@ -25,7 +25,7 @@ class FasilitasController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.fasilitas.create');
     }
 
     /**
@@ -36,7 +36,17 @@ class FasilitasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!empty($request->id)){
+            $model = Fasilitas::find($request->id);
+
+        }else{
+            $model = new Fasilitas();
+
+        }
+        $model->nama = $request->nama;
+        $model->save();
+        return redirect()->route('fasilitas.index')->with('success', 'fasilitas updated successfully');
+
     }
 
     /**
@@ -47,7 +57,10 @@ class FasilitasController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Fasilitas::find($id);
+        return view('admin.fasilitas.show',compact('model'));
+
+        
     }
 
     /**
@@ -58,7 +71,8 @@ class FasilitasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = Fasilitas::find($id);
+        return view('admin.fasilitas.edit',compact('model'));
     }
 
     /**
@@ -81,6 +95,11 @@ class FasilitasController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $model = Fasilitas::find($id)->delete();
+
+
+        return redirect()->route('fasilitas.index')->with('success', 'fasilitas created deleted');
+
     }
 }

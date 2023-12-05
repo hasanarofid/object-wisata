@@ -2,33 +2,53 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">User Admin /</span> Detail</h4>
+    <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">Kriteria /</span> Detail Kriteria</h4>
     <div class="card ">
         <h5 class="card-header">Form Detail</h5>
         <div class="card-body">
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Nama</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Nama Kreteria</label>
             <div class="col-md-1"> : </div>
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->name}}</label>
+                <label class="col-form-label">{{ $model->kriteria}}</label>
             </div>
           </div>
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Username</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Definisi</label>
             <div class="col-md-1"> : </div>
 
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->username}}</label>
+                <label class="col-form-label">{{ $model->difinisi}}</label>
             </div>
           </div>
 
           <div class="mb-3 row">
-            <label for="html5-email-input" class="col-md-2 col-form-label">Email</label>
+            <label for="html5-email-input" class="col-md-2 col-form-label">Parameter</label>
             <div class="col-md-1"> : </div>
 
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->email}}</label>
+                <label class="col-form-label">{{ $model->parameter}}</label>
+            </div>
+
+          </div>
+
+          <div class="mb-3 row">
+            <label for="html5-email-input" class="col-md-2 col-form-label">Nilai</label>
+            <div class="col-md-1"> : </div>
+
+            <div class="col-md-9">
+                <label class="col-form-label">{{ $model->nilai}}</label>
+            </div>
+
+          </div>
+
+          <div class="mb-3 row">
+            <label for="html5-email-input" class="col-md-2 col-form-label">Skala Prioritas</label>
+            <div class="col-md-1"> : </div>
+
+            <div class="col-md-9">
+                <label class="col-form-label">{{ $model->prioritas}}</label>
             </div>
 
           </div>
