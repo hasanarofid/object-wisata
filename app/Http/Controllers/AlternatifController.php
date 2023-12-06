@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
+use App\Models\Kriteria;
+use App\Models\Pantai;
 use Illuminate\Http\Request;
 
 class AlternatifController extends Controller
@@ -25,7 +27,9 @@ class AlternatifController extends Controller
      */
     public function create()
     {
-        //
+        $pantai = Pantai::all();
+        $kriteria = Kriteria::all();
+        return view('admin.alternatif.create',compact('pantai','kriteria'));
     }
 
     /**

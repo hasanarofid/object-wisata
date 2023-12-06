@@ -1,38 +1,43 @@
 @extends('layouts.admin')
+@section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 
+@endsection
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">User Admin /</span> Add User</h4>
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
-            <form action="{{ route('user.store') }}" method="POST">
+            <form action="{{ route('alternatif.store') }}" method="POST">
                 @csrf
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Nama</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Pantai</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="name" required  id="html5-text-input">
+              <select name="pantai_id" id="pantai_id" class="form-control select2">
+                  <option value="">.:Pilih:.</option>
+                  @foreach ($pantai as $item)
+                      <option value="{{ $item->id }}"> {{$item->nama }} </option>
+                  @endforeach
+              </select>
+
             </div>
           </div>
           <div class="mb-3 row">
-          <label for="html5-text-input" class="col-md-2 col-form-label">Username</label>
+          <label for="html5-text-input" class="col-md-2 col-form-label">Kategori</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="username" required  id="html5-text-input">
+              <select name="kriteria" id="kriteria" class="form-control select2">
+                <option value="">.:Pilih:.</option>
+                @foreach ($kriteria as $item)
+                    <option value="{{ $item->id }}"> {{$item->nama }} </option>
+                @endforeach
+            </select>
+
+
             </div>
           </div>
 
-          <div class="mb-3 row">
-            <label for="html5-email-input" class="col-md-2 col-form-label">Email</label>
-            <div class="col-md-10">
-              <input class="form-control" type="email" name="email"  id="html5-email-input">
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
-            <div class="col-md-10">
-              <input class="form-control" type="password" name="password" id="html5-password-input">
-            </div>
-          </div>
+          
 
           <div class="pt-4">
             <button type="reset" class="btn btn-label-secondary waves-effect">Cancel</button>
@@ -47,4 +52,15 @@
 
 </div>
 
+@endsection
+
+
+@section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+ $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
 @endsection
