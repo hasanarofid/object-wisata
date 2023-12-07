@@ -9,7 +9,7 @@
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
-            <form action="{{ route('alternatif.store') }}" method="POST">
+            <form action="{{ route('alternatif.store') }}" method="POST" id="myForm">
                 @csrf
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Pantai</label>
@@ -29,7 +29,7 @@
               <select name="kriteria" id="kriteria" class="form-control select2">
                 <option value="">.:Pilih:.</option>
                 @foreach ($kriteria as $item)
-                    <option value="{{ $item->id }}"> {{$item->nama }} </option>
+                    <option value="{{ $item->id }}"> {{$item->kriteria }} </option>
                 @endforeach
             </select>
 
@@ -39,8 +39,9 @@
 
           
 
-          <div class="pt-4">
-            <button type="reset" class="btn btn-label-secondary waves-effect">Cancel</button>
+          <div class="pt-4">            
+            <a href="{{ route('alternatif.index') }}" class="btn btn-warning  btn-label-secondary waves-effect">Cancel</a>
+            <button type="button" class="btn btn-info btn-label-secondary waves-effect reset">Reset</button>
             <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Submit</button>
           </div>
 
@@ -59,8 +60,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <script>
+  document.addEventListener('DOMContentLoaded', function () {
+        var resetButton = document.querySelector('.reset');
+
+        resetButton.addEventListener('click', function () {
+            var form = document.getElementById('myForm'); // Replace 'myForm' with the actual ID of your form
+            form.reset();
+        });
+    });
  $(document).ready(function() {
         $('.select2').select2();
+
     });
+
 </script>
 @endsection

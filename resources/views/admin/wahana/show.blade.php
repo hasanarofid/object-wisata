@@ -14,10 +14,12 @@
             </div>
           </div>
 
-
+          <div class="pt-4">
+            <a href="{{ route('wahana.index') }}" class="btn btn-info" ><i class="fa fa-arrow-left mr-2 ml-2" aria-hidden="true"></i> Kembali</a>
+          </div>
         </div>
 
-        
+       
       </div>
 
 </div>

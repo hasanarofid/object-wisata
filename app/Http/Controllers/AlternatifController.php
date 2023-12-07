@@ -40,7 +40,13 @@ class AlternatifController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $model = new Alternatif();
+        $model->alternatif = 1;
+        $model->kriteria = $request->kriteria;
+        $model->pantai_id = $request->pantai_id;
+        $model->save();
+        return redirect()->route('alternatif.index')->with('success', 'alternatif create successfully');
     }
 
     /**
@@ -51,7 +57,8 @@ class AlternatifController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Alternatif::find($id);
+        return view('admin.alternatif.show',compact('model'));
     }
 
     /**

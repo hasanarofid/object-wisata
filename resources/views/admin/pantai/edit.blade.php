@@ -9,7 +9,7 @@
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
-            <form action="{{ route('pantai.update',['id'=>$model->id]) }}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{ route('pantai.update',['id'=>$model->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @php
                     
@@ -130,10 +130,11 @@ $selected = in_array($item->id, $decodedWahana);
         
 
 
-          <div class="pt-4">
-            <button type="reset" class="btn btn-label-secondary waves-effect">Cancel</button>
-            <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Edit</button>
-          </div>
+      <div class="pt-4">            
+        <a href="{{ route('pantai.index') }}" class="btn btn-warning  btn-label-secondary waves-effect">Cancel</a>
+        <button type="button" class="btn btn-info btn-label-secondary waves-effect reset">Reset</button>
+        <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Submit</button>
+      </div>
 
         </form>
         </div>
@@ -144,7 +145,18 @@ $selected = in_array($item->id, $decodedWahana);
 </div>
 
 @endsection
+<script>
 
+  document.addEventListener('DOMContentLoaded', function () {
+            var resetButton = document.querySelector('.reset');
+    
+            resetButton.addEventListener('click', function () {
+                var form = document.getElementById('myForm'); // Replace 'myForm' with the actual ID of your form
+                form.reset();
+            });
+        });
+  </script>
+  
 
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>

@@ -6,7 +6,7 @@
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
-            <form action="{{ route('user.store') }}" method="POST">
+            <form action="{{ route('user.store') }}" method="POST" id="myForm">
                 @csrf
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Nama</label>
@@ -34,8 +34,9 @@
             </div>
           </div>
 
-          <div class="pt-4">
-            <button type="reset" class="btn btn-label-secondary waves-effect">Cancel</button>
+          <div class="pt-4">            
+            <a href="{{ route('user.index') }}" class="btn btn-warning  btn-label-secondary waves-effect">Cancel</a>
+            <button type="button" class="btn btn-info btn-label-secondary waves-effect reset">Reset</button>
             <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Submit</button>
           </div>
 
@@ -48,3 +49,15 @@
 </div>
 
 @endsection
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+          var resetButton = document.querySelector('.reset');
+  
+          resetButton.addEventListener('click', function () {
+              var form = document.getElementById('myForm'); // Replace 'myForm' with the actual ID of your form
+              form.reset();
+          });
+      });
+  </script>
