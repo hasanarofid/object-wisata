@@ -31,10 +31,41 @@
     margin: 0;
 }
 
+.rating {
+      display: inline-block;
+      unicode-bidi: bidi-override;
+      color: #ddd;
+      font-size: 24px;
+      height: 25px;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    .rating > span {
+      display: inline-block;
+      position: relative;
+      width: 1.1em;
+    }
+
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before {
+      content: "\2605";
+      position: absolute;
+      color: #ffcc00;
+    }
+
+    .rating > span:hover ~ span:before {
+      content: "\2605";
+      position: absolute;
+      color: #ddd;
+    }
+
 </style>
 @section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link rel="stylesheet" href="{{ asset('theme/assets/vendor/css/pages/ui-carousel.css') }}" />
 @endsection
 @section('content')
 
@@ -132,41 +163,36 @@
           <div class="modal-body">
               <div class="mb-3 row">
                 <input type="hidden" id="userLatitude" name="userLatitude">
-<input type="hidden" id="userLongitude" name="userLongitude">
-
+                <input type="hidden" id="userLongitude" name="userLongitude">
                 <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
                 <div class="col-md-10">
-                  <div class="form-group row">
-                      <div class="col-md-6">
-                          <input class="form-control" type="text" name="biaya_masuk1" required id="biaya_masuk1" placeholder="dari">
-                      </div>
-                      <div class="col-md-6">
-                          <input class="form-control" type="text" name="biaya_masuk2" required id="biaya_masuk2" placeholder="sampai">
-                      </div>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk">
+                    <div class="input-group-append">
+                      <span class="input-group-text">Rp</span>
+                    </div>
                   </div>
               </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-search-input" class="col-md-2 col-form-label">Jarak</label>
                 <div class="col-md-10">
-                  <div class="form-group row">
-                    <div class="col-md-6">
-                        <input class="form-control" type="text" name="jarak1" required id="jarak1" placeholder="dari">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="jarak" id="jarak" placeholder="Jarak Maksimal">
+                    <div class="input-group-append">
+                      <span class="input-group-text">m</span>
                     </div>
-                    <div class="col-md-6">
-                        <input class="form-control" type="text" name="jarak2" required id="jarak2" placeholder="sampai">
-                    </div>
-                </div>
-
+                  </div>
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-email-input" class="col-md-2 col-form-label">Fasilitas</label>
                 <div class="col-md-10">
-                  <select name="fasilitas[]" id="fasilitas" class="form-control select2" multiple="multiple">
-                    @foreach ($fasilitas as $item)
-                        <option value="{{ $item->id }}"> {{ $item->nama }} </option>
-                    @endforeach
+                  <select name="fasilitas" id="fasilitas" class="form-control" >
+                    <option value="">.: Pilih :.</option>
+                    <option value="Sangat Lengkap">Sangat Lengkap</option>
+                    <option value="Lengkap">Lengkap</option>
+                    <option value="Kurang Lengkap">Kurang Lengkap</option>
                   </select>
                  
                 </div>
@@ -174,10 +200,12 @@
               <div class="mb-3 row">
                 <label for="html5-url-input" class="col-md-2 col-form-label">Wahana</label>
                 <div class="col-md-10">
-                  <select name="wahana[]" id="wahana" class="form-control select2" multiple="multiple">
-                    @foreach ($wahana as $item)
-                        <option value="{{ $item->id }}"> {{ $item->nama }} </option>
-                    @endforeach
+                  <select name="wahana" id="wahana" class="form-control" >
+                    <option value="">.: Pilih :.</option>
+                    <option value="Sangat Lengkap">Sangat Lengkap</option>
+                    <option value="Lengkap">Lengkap</option>
+                    <option value="Kurang Lengkap">Kurang Lengkap</option>
+
                   </select>
 
                 </div>
@@ -191,7 +219,14 @@
               <div class="mb-3 row">
                 <label for="html5-password-input" class="col-md-2 col-form-label">Ulasan</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="text" name="ulasn" id="html5-password-input">
+                  <div class="rating" id="star-rating">
+                    <span data-value="1">&#x2605;</span>
+                    <span data-value="2">&#x2605;</span>
+                    <span data-value="3">&#x2605;</span>
+                    <span data-value="4">&#x2605;</span>
+                    <span data-value="5">&#x2605;</span>
+                  </div>
+                  <input type="hidden" name="rating" id="rating-input">
                 </div>
               </div>
 
@@ -213,13 +248,46 @@
 @endphp
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <!-- Page JS -->
 
 
 <script>
   $(document).ready(function () {
+
+
+    let selectedRating = 0;
+
+    // Handle click event on stars
+    $('#star-rating span').on('click', function () {
+      // Get the selected rating value
+      const ratingValue = $(this).data('value');
+
+      // Update the selected rating variable
+      selectedRating = ratingValue;
+      $('#rating-input').val(selectedRating);
+
+      // Update the UI to reflect the selected rating
+      updateRatingUI();
+
+      // You can also perform additional actions based on the selected rating here
+      // For example, send the rating to the server or perform other actions.
+    });
+
+    // Function to update the UI based on the selected rating
+    function updateRatingUI() {
+      // Remove the hover effect from all stars
+      $('#star-rating span').css('color', '');
+
+      // Apply the hover effect to the selected number of stars
+      $('#star-rating span:lt(' + selectedRating + ')').css('color', '#ffcc00');
+
+      // Update the selected rating text
+      $('#selected-rating').text('Selected Rating: ' + selectedRating);
+    }
+
+
     $('.select2').select2();
     loadPantaiTerdekat();
 
@@ -285,28 +353,62 @@
                         userLongitude: userLongitude
                     },
                     success: function (nearestPantai) {
+                      console.log(nearestPantai);
                         // Handle the response, update UI, etc.
                         var container = $('#data-container');
-                        $.each(nearestPantai, function (index, item) {
-                            // Append new card to the container
-                            container.append(`
-                                <div class="col-md-4 col-lg-3 mb-3">
-                                  <a href="${'{{ $detailRoute }}'.replace(':itemId', item['id'])}" class="card-link">
-                                    <div class="card">
-                                        <div class="card-body position-relative">
-                                            <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill">
-                                                <i class="fa-solid fa-plus-minus"></i> ${item['jarak']} KM
-                                            </button>
-                                            <img class="img-fluid d-block" src="{{ asset('pantai/') }}/${item['gambar']}" alt="${item['gambar']}" style="height: 200px;">
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="javascript:void(0);" class="card-link">${item['nama']}</a>
-                                        </div>
-                                    </div>
-                                  </a>
-                                </div>
-                            `);
-                        });
+
+$.each(nearestPantai, function (index, item) {
+    // Initialize an empty string to store slide HTML
+    var slidesHtml = '';
+
+    // Parse the JSON string into an array
+    var gambarArray = JSON.parse(item.gambar);
+
+    // Loop through each image for the current item
+    $.each(gambarArray, function (imgIndex, imgName) {
+        slidesHtml += `
+            <div class="swiper-slide" style="background-image: url('{{ asset('pantai/') }}/${imgName}')"></div>
+        `;
+    });
+
+    // Create a unique ID for each Swiper container
+    var swiperContainerId = 'swiper-container-' + index;
+
+    // Append the carousel container and slides to the container with reversed order
+    container.append(`
+        <div class="col-md-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body position-relative">
+                    <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill" style="z-index: 2;">
+                        <i class="fa-solid fa-plus-minus"></i> ${item.jarak} KM
+                    </button>
+                    <div class="swiper-container swiper" id="${swiperContainerId}">
+                        <div class="swiper-wrapper">
+                            ${slidesHtml}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">${item.nama}</a>
+                </div>
+            </div>
+        </div>
+    `);
+
+    // Initialize Swiper after adding all slides for the current item
+    new Swiper(`#${swiperContainerId}`, {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+            el: `#${swiperContainerId} .swiper-pagination`,
+            clickable: true,
+        },
+    });
+});
+
+
+
 
                     },
                     error: function (error) {

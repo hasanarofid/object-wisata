@@ -41,82 +41,32 @@
                         <table class="table table-bordered  ">
                             <thead class="text-center bg-success">
                                 <tr>
-                                    <th rowspan="3" class="text-center vertical-center">No</th>
-                                    <th rowspan="3" class="text-center vertical-center">Alternatif</th>
-                                    <th colspan="9">Kriteria</th>
-                                  
-                                    <th rowspan="3" class="text-center vertical-center">Link Maps</th>
+                                    <th class="text-center vertical-center">No</th>
+                                    <th class="text-center vertical-center">Nama Pantai</th>
+                                    <th class="text-center vertical-center">Ranking</th>
+                                    <th class="text-center vertical-center">Skor S</th>
+                                    <th class="text-center vertical-center">Skor R</th>
+                                    <th class="text-center vertical-center">Skor Q</th>
+                                    <th class="text-center vertical-center">Titik Lokasi</th>
                                 </tr>
-                                <tr>
-                                    <th rowspan="2"  class="text-center vertical-center">Biaya Masuk</th>
-                                    <th  rowspan="2"  class="text-center vertical-center">Jarak</th>
 
-
-                                    <th colspan="2" class="text-center vertical-center">Fasilitas</th>
-                                    <th colspan="2" class="text-center vertical-center">Wahana</th>
-                                    <th colspan="2" class="text-center vertical-center">Waktu Operasional</th>
-                                    <th  rowspan="2" class="text-center vertical-center">Ulasan</th>
-
-
-                                </tr>
-                                <tr>
-                                    <th>Yang Tersedia</th>
-                                    <th>Nilai Parameter</th>
-                                    <th>Yang Tersedia</th>
-                                    <th>Nilai Parameter</th>
-                                    <th class="text-center vertical-center">Pukul</th>
-                                    <th class="text-center vertical-center">Total (jam)</th>
-                                </tr>
                             </thead>
 
                             <tbody>
                                 @php
-        $colors = ['#FF5733', '#33FF57', '#3357FF', '#57FF33', '#5733FF']; // Array of colors
-                                $no = 1;
+                                    $no = 1;
                                 @endphp
-
-                                @foreach ($datapantai as $item)
-                                @php
-                                    $fasilitasString = $item['fasilitas'];
-                                    $wahanaString = $item['wahana'];
-                    $fasilitasArray = explode(",", $fasilitasString);
-                    $wahanaArray = explode(",", $wahanaString);
-                    $facilities = \App\Models\Fasilitas::whereIn('id', $fasilitasArray)->get();
-                    $wahanas = \App\Models\Wahana::whereIn('id', $wahanaArray)->get();
-                    
-
-                                @endphp
+                               @foreach ($datapantai as $item)
+                                   
                                     <tr>
                                         <td>{{ $no++ }}</td>
+                                        <td> <a href="{{{ route('detail',['id'=>$item['id']]) }}}" target="_blank"> {{ $item['nama'] }} </a> </td>
                                         <td> {{ $item['nama'] }} </td>
-                                        <td> {{ $item['biaya_masuk'] }} </td>
-                                        <td> {{ $item['jarak'] }} KM</td>
-                                        <td>
-                                            @foreach ($facilities as $index => $fas)
-                                            @php
-                                                $colorIndex = $index % count($colors); // Use modulo to cycle through colors
-                                                $color = $colors[$colorIndex]; // Get the color for this iteration
-                                            @endphp
-                                        
-                                                <a href="#" class="btn btn-default" style="background-color: {{ $color }};color:white;">{{ $fas->nama}}</a>
-                                            @endforeach
-                                    </td>
-                                        <td> {{ $item['fasilitas'] }} </td>
-                                        <td>
-                                            @foreach ($wahanas as $index => $fas)
-                                            @php
-                                                $colorIndex = $index % count($colors); // Use modulo to cycle through colors
-                                                $color = $colors[$colorIndex]; // Get the color for this iteration
-                                            @endphp
-                                        
-                                                <a href="#" class="btn btn-default" style="background-color: {{ $color }};color:white;">{{ $fas->nama}}</a>
-                                            @endforeach
-                                    </td>
-                                        <td> {{ $item['wahana'] }} </td>
-                                        <td> {{ $item['waktu_operasional'] }} </td>
-                                        <td> {{ $item['waktu_operasional'] }} </td>
-                                        <td> {{ $item['waktu_operasional'] }} </td>
-                                        <td> {{ $item['waktu_operasional'] }} </td>
+                                        <td> {{ $item['nama'] }} </td>
+                                        <td> {{ $item['nama'] }} </td>
+                                        <td> {{ $item['nama'] }} </td>
+                                        <td> <a href="{{ $item['link_maps'] }}" target="_blank">view maps </a> </td>
+                                       
                                     </tr>
                                 @endforeach
                             </tbody>

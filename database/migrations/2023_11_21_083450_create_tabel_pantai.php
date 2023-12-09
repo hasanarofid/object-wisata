@@ -26,6 +26,7 @@ class CreateTabelPantai extends Migration
             $table->string('ulasan')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->string('link_maps')->nullable();
             $table->timestamps();
         });
     }

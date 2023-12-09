@@ -38,7 +38,6 @@
     <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
     <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
     <link rel="stylesheet" href="{{ asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}" />
-
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -112,7 +111,6 @@
   <!-- Vendors JS -->
   <script src="{{ asset('theme/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
   <script src="{{ asset('theme/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
-
   <!-- Main JS -->
  
   <!-- Page JS -->

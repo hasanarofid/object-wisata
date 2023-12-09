@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fasilitas;
 use Illuminate\Http\Request;
 use App\Models\Pantai;
+use App\Models\Ulasan;
 use App\Models\Wahana;
 
 class DashboardController extends Controller
@@ -33,12 +34,18 @@ class DashboardController extends Controller
     //detail pantai
     public function detail($id){
         $model = Pantai::find($id);
-        return view('dashboard.detail',compact('model'));
+        $ulasan = Ulasan::where('pantai_id',$id)->get();
+        if ($ulasan->isNotEmpty()) {
+            $averageRating = $ulasan->avg('rating');
+        } else {
+            $averageRating = 0;
+        }
+        return view('dashboard.detail',compact('model','averageRating'));
     }
 
     //carirekomendasi
     public function carirekomendasi(Request $request){
-        // dd($request); belum dilakukan filter pencarian
+        // dd($request); 
         $userLatitude = $request->input('userLatitude');
         $userLongitude = $request->input('userLongitude');
         $datapantai = [];
@@ -53,6 +60,7 @@ class DashboardController extends Controller
                 'waktu_operasional'=>$value->waktu_operasional,
                 'latitude'=>$value->latitude,
                 'longitude'=>$value->longitude,
+                'link_maps'=>$value->link_maps
             );
         }
 
@@ -158,6 +166,16 @@ class DashboardController extends Controller
     }
 
 
+    //save ulasan
+    public function ulasan(Request $request){
+        $ulasan = new Ulasan();
+        $ulasan->pantai_id = $request->pantai_id;
+        $ulasan->comment = $request->comment;
+        $ulasan->rating = $request->rating;
+        $ulasan->save();
+        return redirect()->route('detail',['id'=>$ulasan->pantai_id])->with('success', 'Ulasan berhasil dikirim');
+
+    }
 
 
 }

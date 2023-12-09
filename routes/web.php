@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/ubah-password', [App\Http\Controllers\UbahpasswordController::class, 'ubah'])->name('ubah-password');
+Route::post('/update-password', [App\Http\Controllers\UbahpasswordController::class, 'update'])->name('update-password');
+
 Route::get('/', 'DashboardController@index')->name('home');
 Route::get('/load-more', 'DashboardController@loadMore')->name('load-more');
 Route::get('/cari-rekomendasi', 'DashboardController@carirekomendasi')->name('cari-rekomendasi');
 Route::get('/detail/{id}', 'DashboardController@detail')->name('detail');
+Route::post('/ulasan', 'DashboardController@ulasan')->name('ulasan');
 Route::get('/getNearestPantai', 'DashboardController@getNearestPantai')->name('pantai-terdekat');
 
 

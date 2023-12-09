@@ -20,4 +20,9 @@ class Pantai extends Model
         // Add other attributes as needed
     ];
 
+    public function ulasan()
+    {
+        return $this->hasMany(Ulasan::class, 'pantai_id', 'id');
+    }
+
 }
