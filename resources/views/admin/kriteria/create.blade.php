@@ -11,38 +11,24 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Nama Kreteria</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="kriteria" required  id="kriteria">
+              <input class="form-control" type="text" name="nama_kriteria" required  id="nama_kriteria">
             </div>
           </div>
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Definisi</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Tipe Kreteria</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="difinisi"   id="difinisi">
+              <input class="form-control" type="text" name="tipe_kriteria"   id="tipe_kriteria">
             </div>
           </div>
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Parameter</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Skala Prioritas</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="parameter"   id="parameter">
+              <input class="form-control" type="text" name="skala_prioritas"   id="skala_prioritas">
             </div>
           </div>
 
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Nilai</label>
-            <div class="col-md-10">
-              <input class="form-control" type="text" name="nilai"   id="nilai">
-            </div>
-          </div>
-
-
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Skala Prioritas </label>
-            <div class="col-md-10">
-              <input class="form-control" type="text" name="prioritas"   id="prioritas">
-            </div>
-          </div>
-          
+        
 
 
 

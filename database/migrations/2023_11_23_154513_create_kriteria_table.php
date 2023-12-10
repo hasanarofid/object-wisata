@@ -15,11 +15,10 @@ class CreateKriteriaTable extends Migration
     {
         Schema::create('kriteria', function (Blueprint $table) {
             $table->id();
-            $table->string('kriteria')->nullable();
-            $table->string('difinisi')->nullable();
-            $table->string('parameter')->nullable();
-            $table->string('nilai')->nullable();
-            $table->string('prioritas')->nullable();
+            $table->string('nama_kriteria')->nullable();
+            $table->string('tipe_kriteria')->nullable();
+            $table->string('skala_prioritas')->nullable();
+            $table->string('bobot_kriteria')->nullable();
             $table->timestamps();
         });
     }

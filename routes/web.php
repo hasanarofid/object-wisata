@@ -22,8 +22,9 @@ Route::post('/update-password', [App\Http\Controllers\UbahpasswordController::cl
 Route::get('/', 'DashboardController@index')->name('home');
 Route::get('/load-more', 'DashboardController@loadMore')->name('load-more');
 Route::get('/cari-rekomendasi', 'DashboardController@carirekomendasi')->name('cari-rekomendasi');
-Route::get('/detail/{id}', 'DashboardController@detail')->name('detail');
+Route::get('/detail/{id}/{no?}/{id_alternatif?}', 'DashboardController@detail')->name('detail');
 Route::post('/ulasan', 'DashboardController@ulasan')->name('ulasan');
+Route::get('/perhitungan', 'DashboardController@perhitungan')->name('perhitungan');
 Route::get('/getNearestPantai', 'DashboardController@getNearestPantai')->name('pantai-terdekat');
 
 

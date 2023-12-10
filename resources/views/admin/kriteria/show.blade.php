@@ -10,37 +10,17 @@
             <label for="html5-text-input" class="col-md-2 col-form-label">Nama Kreteria</label>
             <div class="col-md-1"> : </div>
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->kriteria}}</label>
+                <label class="col-form-label">{{ $model->nama_kriteria}}</label>
             </div>
           </div>
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Definisi</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Tipe Kriteria</label>
             <div class="col-md-1"> : </div>
 
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->difinisi}}</label>
+                <label class="col-form-label">{{ $model->tipe_kriteria}}</label>
             </div>
-          </div>
-
-          <div class="mb-3 row">
-            <label for="html5-email-input" class="col-md-2 col-form-label">Parameter</label>
-            <div class="col-md-1"> : </div>
-
-            <div class="col-md-9">
-                <label class="col-form-label">{{ $model->parameter}}</label>
-            </div>
-
-          </div>
-
-          <div class="mb-3 row">
-            <label for="html5-email-input" class="col-md-2 col-form-label">Nilai</label>
-            <div class="col-md-1"> : </div>
-
-            <div class="col-md-9">
-                <label class="col-form-label">{{ $model->nilai}}</label>
-            </div>
-
           </div>
 
           <div class="mb-3 row">
@@ -48,10 +28,12 @@
             <div class="col-md-1"> : </div>
 
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->prioritas}}</label>
+                <label class="col-form-label">{{ $model->skala_prioritas}}</label>
             </div>
 
           </div>
+
+        
           <div class="pt-4">
             <a href="{{ route('kriteria.index') }}" class="btn btn-info" ><i class="fa fa-arrow-left mr-2 ml-2" aria-hidden="true"></i> Kembali</a>
           </div>

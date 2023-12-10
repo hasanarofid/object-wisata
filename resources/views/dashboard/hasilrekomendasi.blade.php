@@ -31,7 +31,7 @@
                             <!-- Your content goes here -->
                         </div>
                         <div style="text-align: right;" class="col-6 text-right mt-2 ml-10 mb-2">
-                            <button class="btn btn-primary">Perhitungan</button>
+                            <a href="{{ route('perhitungan') }}" class="btn btn-primary">Perhitungan</a>
                         </div>
                     </div>
                     <br>
@@ -60,11 +60,11 @@
                                    
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td> <a href="{{{ route('detail',['id'=>$item['id']]) }}}" target="_blank"> {{ $item['nama'] }} </a> </td>
-                                        <td> {{ $item['nama'] }} </td>
-                                        <td> {{ $item['nama'] }} </td>
-                                        <td> {{ $item['nama'] }} </td>
-                                        <td> {{ $item['nama'] }} </td>
+                                        <td> <a href="{{ route('detail',['id'=>$item['id'],'no'=>$item['ranking'],'id_alternatif'=>$item['id_alternatif'] ]) }}" target="_blank"> {{ $item['nama'] }} </a> </td>
+                                        <td> #{{ $item['ranking'] }} </td>
+                                        <td> {{ $item['skorS'] }} </td>
+                                        <td> {{ $item['skorR'] }} </td>
+                                        <td> {{ $item['skorQ'] }} </td>
                                         <td> <a href="{{ $item['link_maps'] }}" target="_blank">view maps </a> </td>
                                        
                                     </tr>
@@ -75,6 +75,25 @@
                       
                     </div>
                 </div>
+
+
+                <div class="modal fade" id="myModalPerhitungan" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="modalCenterTitle">Perhitungan</h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        </div>
+                      <div class="modal-body">
+                        
+                      </div>
+                </div>
+              </div>
+            </div>
         
         </div>
     </div>

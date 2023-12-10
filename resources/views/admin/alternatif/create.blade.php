@@ -14,28 +14,68 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Pantai</label>
             <div class="col-md-10">
-              <select name="pantai_id" id="pantai_id" class="form-control select2">
-                  <option value="">.:Pilih:.</option>
+               <select name="pantai_id" id="pantai_id" class="form-control select2">
+                   <option value="">.:Pilih:.</option>
                   @foreach ($pantai as $item)
                       <option value="{{ $item->id }}"> {{$item->nama }} </option>
-                  @endforeach
-              </select>
+                  @endforeach </select>
+             
 
             </div>
           </div>
           <div class="mb-3 row">
-          <label for="html5-text-input" class="col-md-2 col-form-label">Kategori</label>
+          <label for="html5-text-input" class="col-md-2 col-form-label">K1</label>
             <div class="col-md-10">
-              <select name="kriteria" id="kriteria" class="form-control select2">
-                <option value="">.:Pilih:.</option>
-                @foreach ($kriteria as $item)
-                    <option value="{{ $item->id }}"> {{$item->kriteria }} </option>
-                @endforeach
-            </select>
+              <input type="text" name="k1" id="k1" class="form-control">
+          
 
 
             </div>
           </div>
+
+          <div class="mb-3 row">
+
+          <label for="html5-text-input" class="col-md-2 col-form-label">K2</label>
+            <div class="col-md-10">
+              <input type="text" name="k2" id="k2" class="form-control">
+
+
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+          <label for="html5-text-input" class="col-md-2 col-form-label">K3</label>
+            <div class="col-md-10">
+              <input type="text" name="k3" id="k3" class="form-control">
+
+
+            </div>
+          </div>
+
+
+          <div class="mb-3 row">
+          <label for="html5-text-input" class="col-md-2 col-form-label">K4</label>
+            <div class="col-md-10">
+              <input type="text" name="k4" id="k4" class="form-control">
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+          <label for="html5-text-input" class="col-md-2 col-form-label">K5</label>
+            <div class="col-md-10">
+              <input type="text" name="k5" id="k5" class="form-control">
+
+            </div>
+          </div>
+
+
+          <div class="mb-3 row">
+          <label for="html5-text-input" class="col-md-2 col-form-label">K6</label>
+            <div class="col-md-10">
+              <input type="text" name="k6" id="k6" class="form-control">
+            </div>
+          </div>
+          
 
           
 

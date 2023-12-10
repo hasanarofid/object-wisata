@@ -41,11 +41,9 @@ class KriteriaController extends Controller
         }else{
             $model = new Kriteria();
         }
-        $model->kriteria = $request->kriteria;
-        $model->difinisi = $request->difinisi;
-        $model->parameter = $request->parameter;
-        $model->nilai = $request->nilai;
-        $model->prioritas = $request->prioritas;
+        $model->nama_kriteria = $request->nama_kriteria;
+        $model->tipe_kriteria = $request->tipe_kriteria;
+        $model->skala_prioritas = $request->skala_prioritas;
         $model->save();
         
         return redirect()->route('kriteria.index')->with('success', 'Kriteria created successfully');

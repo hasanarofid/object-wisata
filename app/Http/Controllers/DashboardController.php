@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternatif;
 use App\Models\Fasilitas;
+use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use App\Models\Pantai;
 use App\Models\Ulasan;
@@ -32,7 +34,15 @@ class DashboardController extends Controller
     }
 
     //detail pantai
-    public function detail($id){
+    public function detail($id,$no = null,$id_alternatif = null){
+        if(!empty($id_alternatif) ||!empty($no) ){
+            $alternatif = Alternatif::find($id_alternatif);
+            $no = $no;
+        }else{
+            $alternatif = null;
+            $no = null;
+        }
+
         $model = Pantai::find($id);
         $ulasan = Ulasan::where('pantai_id',$id)->get();
         if ($ulasan->isNotEmpty()) {
@@ -40,7 +50,7 @@ class DashboardController extends Controller
         } else {
             $averageRating = 0;
         }
-        return view('dashboard.detail',compact('model','averageRating'));
+        return view('dashboard.detail',compact('model','averageRating','alternatif','no'));
     }
 
     //carirekomendasi
@@ -50,34 +60,39 @@ class DashboardController extends Controller
         $userLongitude = $request->input('userLongitude');
         $datapantai = [];
         $data = Pantai::get(); // Your Pantai data array here;
-        foreach($data as $value){
+        $alternatif = Alternatif::get();
+        $ranking = $alternatif->sortByDesc('skorQ');
+    
+       $no = 1;
+        foreach($ranking as $value){
+            // dd($value);
             $datapantai[] = array(
-                'id'=>$value->id,
-                'nama'=>$value->nama,
-                'biaya_masuk'=>$value->biaya_masuk,
-                'fasilitas'=>$value->fasilitas,
-                'wahana'=>$value->wahana,
-                'waktu_operasional'=>$value->waktu_operasional,
-                'latitude'=>$value->latitude,
-                'longitude'=>$value->longitude,
-                'link_maps'=>$value->link_maps
+                'id'=>$value->pantai->id,
+                'id_alternatif'=>$value->id,
+                'nama'=>$value->pantai->nama,
+                'ranking'=>$no++,
+                'skorR'=>$value->skorR,
+                'skorS'=>$value->skorS,
+                'skorQ'=>$value->skorQ,
+                'link_maps'=>$value->pantai->link_maps
             );
         }
+        // dd($datapantai);
 
         // Calculate the nearest Pantai
-        $nearestPantai = $this->calculateNearestPantai($datapantai, $userLatitude, $userLongitude);
-        // dd($nearestPantai);
-        foreach ($datapantai as &$pantai) {
-            $pantai['jarak'] = $this->calculateDistance(
-                $userLatitude,
-                $userLongitude,
-                $pantai['latitude'],
-                $pantai['longitude']
-            );
-        }
-        usort($datapantai, function ($a, $b) {
-            return $a['jarak'] <=> $b['jarak'];
-        });
+        // $nearestPantai = $this->calculateNearestPantai($datapantai, $userLatitude, $userLongitude);
+        // // dd($nearestPantai);
+        // foreach ($datapantai as &$pantai) {
+        //     $pantai['jarak'] = $this->calculateDistance(
+        //         $userLatitude,
+        //         $userLongitude,
+        //         $pantai['latitude'],
+        //         $pantai['longitude']
+        //     );
+        // }
+        // usort($datapantai, function ($a, $b) {
+        //     return $a['jarak'] <=> $b['jarak'];
+        // });
 
 
         return view('dashboard.hasilrekomendasi',compact('datapantai'));
@@ -175,6 +190,31 @@ class DashboardController extends Controller
         $ulasan->save();
         return redirect()->route('detail',['id'=>$ulasan->pantai_id])->with('success', 'Ulasan berhasil dikirim');
 
+    }
+
+    public function perhitungan(){
+
+        $datapantai = [];
+        $data = Pantai::get(); // Your Pantai data array here;
+        $alternatif = Alternatif::get();
+        $kriteria = Kriteria::get();
+        $ranking = $alternatif->sortByDesc('skorQ');
+    
+       $no = 1;
+        foreach($ranking as $value){
+            // dd($value);
+            $datapantai[] = array(
+                'id'=>$value->pantai->id,
+                'id_alternatif'=>$value->id,
+                'nama'=>$value->pantai->nama,
+                'ranking'=>$no++,
+                'skorR'=>$value->skorR,
+                'skorS'=>$value->skorS,
+                'skorQ'=>$value->skorQ,
+                'link_maps'=>$value->pantai->link_maps
+            );
+        }
+        return view('dashboard.perhitungan',compact('datapantai','kriteria','alternatif','data'));
     }
 
 

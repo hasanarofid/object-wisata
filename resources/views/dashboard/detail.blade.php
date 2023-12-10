@@ -69,6 +69,13 @@
                 line-height: 1.5; 
                 padding-bottom: 5px;"> {{ $model->nama }} </p> </h4>
         
+        @if (!empty($no) && !empty($alternatif))
+        <h5 style="background-color: gray;color:white;">
+          <i class="fa fa-info-circle" style="color:white" aria-hidden="true"></i>
+          Rangking #{{ $no}}, dengan nilai S = {{ $alternatif->skorS }} ,Nilai R = {{ $alternatif->skorR }} ,Nilai Q = {{ $alternatif->skorQ }}
+        </h5>
+            
+        @endif
                 <div class="card">
                     <div class="row g-0">
                         <div class="col-md-6">
@@ -171,7 +178,7 @@
                     </div>
                 </div>
                
-                      <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
+                <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -182,33 +189,33 @@
                                 data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                             </div>
-                      <div class="modal-body">
-                        <!-- Your Ulasan Form Here -->
-                        <form action="{{ route('ulasan') }}" method="POST" >
-                          @csrf
-                          <input type="hidden" name="pantai_id" value="{{ $model->id }}" >
-                          <!-- Comment Input -->
-                          <div class="form-group">
-                            <label for="comment">Komentar:</label>
-                            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                          <div class="modal-body">
+                            <!-- Your Ulasan Form Here -->
+                            <form action="{{ route('ulasan') }}" method="POST" >
+                              @csrf
+                              <input type="hidden" name="pantai_id" value="{{ $model->id }}" >
+                              <!-- Comment Input -->
+                              <div class="form-group">
+                                <label for="comment">Komentar:</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                              </div>
+                              <!-- Star Rating Input -->
+                              <div class="form-group">
+                                <label for="rating">Rating:</label>
+                                <div class="rating" id="star-rating-modal">
+                                  <span data-value="1">&#x2605;</span>
+                                  <span data-value="2">&#x2605;</span>
+                                  <span data-value="3">&#x2605;</span>
+                                  <span data-value="4">&#x2605;</span>
+                                  <span data-value="5">&#x2605;</span>
+                                </div>
+                                <input type="hidden" name="rating" id="rating-input">
+                              </div>
+                              <br>
+                              <!-- Submit Button -->
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                           </div>
-                          <!-- Star Rating Input -->
-                          <div class="form-group">
-                            <label for="rating">Rating:</label>
-                            <div class="rating" id="star-rating-modal">
-                              <span data-value="1">&#x2605;</span>
-                              <span data-value="2">&#x2605;</span>
-                              <span data-value="3">&#x2605;</span>
-                              <span data-value="4">&#x2605;</span>
-                              <span data-value="5">&#x2605;</span>
-                            </div>
-                            <input type="hidden" name="rating" id="rating-input">
-                          </div>
-                          <br>
-                          <!-- Submit Button -->
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                      </div>
                     </div>
                   </div>
                 </div>
