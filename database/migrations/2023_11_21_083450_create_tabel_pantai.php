@@ -18,7 +18,6 @@ class CreateTabelPantai extends Migration
             $table->string('nama')->nullable();
             $table->string('gambar')->nullable();
             $table->string('jarak')->nullable();
-            $table->string('lokasi')->nullable();
             $table->string('biaya_masuk')->nullable();
             $table->string('fasilitas')->nullable();
             $table->string('wahana')->nullable();

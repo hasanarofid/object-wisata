@@ -14,12 +14,16 @@ class FasilitasSeeder extends Seeder
     {
         $data = [
             [
-                'nama' => 'Toilet yang Memadai',
+                'nama' => 'Mushola',
             ],
             [
-                'nama' => 'Tempat Sampah',            ],
-            [
-                'nama' => 'Ramah Difabel',            ],
+                'nama' => 'Restoran',            ],
+            ['nama' => 'Hotel'],
+            ['nama' => 'Pondok'],
+            ['nama' => 'Toilet'],
+            ['nama' => 'Aula'],
+            ['nama' => 'Parkir'],
+            ['nama' => 'Kantin'],
         ];
 
         foreach ($data as $row) {

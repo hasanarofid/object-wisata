@@ -14,12 +14,13 @@ class WahanaSeeder extends Seeder
     {
         $data = [
             [
-                'nama' => 'Roling Donut',
+                'nama' => 'Waterboom',
             ],
             [
-                'nama' => 'Banana Boat',            ],
-            [
-                'nama' => 'Sepeda Air',            ],
+                'nama' => 'Mini Zoo',            ],
+            ['nama' => 'Permainan Anak'],
+            ['nama' => 'Kapal'],
+            ['nama' => 'Banana Boat'],
         ];
 
         foreach ($data as $row) {

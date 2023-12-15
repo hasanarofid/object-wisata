@@ -164,10 +164,10 @@
               <div class="mb-3 row">
                 <input type="hidden" id="userLatitude" name="userLatitude">
                 <input type="hidden" id="userLongitude" name="userLongitude">
-                <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
-                <div class="col-md-10">
+                <label for="html5-text-input" class="col-md-5 col-form-label">Biaya Masuk Maksimal</label>
+                <div class="col-md-7">
                   <div class="input-group">
-                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk">
+                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk  Maksimal">
                     <div class="input-group-append">
                       <span class="input-group-text">Rp</span>
                     </div>
@@ -175,8 +175,8 @@
               </div>
               </div>
               <div class="mb-3 row">
-                <label for="html5-search-input" class="col-md-2 col-form-label">Jarak</label>
-                <div class="col-md-10">
+                <label for="html5-search-input" class="col-md-5 col-form-label">Jarak Maksimal</label>
+                <div class="col-md-7">
                   <div class="input-group">
                     <input type="text" class="form-control" name="jarak" id="jarak" placeholder="Jarak Maksimal">
                     <div class="input-group-append">
@@ -186,8 +186,8 @@
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="html5-email-input" class="col-md-2 col-form-label">Fasilitas</label>
-                <div class="col-md-10">
+                <label for="html5-email-input" class="col-md-5 col-form-label">Fasilitas Minimal</label>
+                <div class="col-md-7">
                   <select name="fasilitas" id="fasilitas" class="form-control" >
                     <option value="">.: Pilih :.</option>
                     <option value="Sangat Lengkap">Sangat Lengkap</option>
@@ -198,8 +198,8 @@
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="html5-url-input" class="col-md-2 col-form-label">Wahana</label>
-                <div class="col-md-10">
+                <label for="html5-url-input" class="col-md-5 col-form-label">Wahana Minimal</label>
+                <div class="col-md-7">
                   <select name="wahana" id="wahana" class="form-control" >
                     <option value="">.: Pilih :.</option>
                     <option value="Sangat Lengkap">Sangat Lengkap</option>
@@ -211,14 +211,14 @@
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="html5-tel-input" class="col-md-2 col-form-label">Waktu Operasional</label>
-                <div class="col-md-10">
+                <label for="html5-tel-input" class="col-md-5 col-form-label">Waktu Operasional Minimal</label>
+                <div class="col-md-7">
                   <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input">
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="html5-password-input" class="col-md-2 col-form-label">Ulasan</label>
-                <div class="col-md-10">
+                <label for="html5-password-input" class="col-md-5 col-form-label">Ulasan Minimal</label>
+                <div class="col-md-7">
                   <div class="rating" id="star-rating">
                     <span data-value="1">&#x2605;</span>
                     <span data-value="2">&#x2605;</span>

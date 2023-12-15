@@ -42,11 +42,11 @@ $fasilitasString = $model->fasilitas;
           </div>
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Lokasi</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Link</label>
             <div class="col-md-1"> : </div>
 
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->lokasi}}</label>
+                <label class="col-form-label">{{ $model->link_maps}}</label>
             </div>
           </div>
 

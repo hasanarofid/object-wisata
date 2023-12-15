@@ -53,21 +53,10 @@ class PantaiController extends Controller
     // Convert the array of facility IDs to a string
     $fasilitasString = implode(',', $facilities);
     $wahanastring = implode(',', $wahanas);
-        // $model = new Pantai();
-        // $model->gambar = $imageName;
-        // $model->nama = $request->nama;
-        // $model->lokasi = $request->lokasi;
-        // $model->biaya_masuk = $request->biaya_masuk;
-        // $model->latitude = $request->latitude;
-        // $model->longitude = $request->longitude;
-        // $model->fasilitas = $fasilitasString;
-        // $model->wahana = $wahanastring;
-        // $model->waktu_operasional = $request->input('jam_awal') .' - '.$request->input('jam_akhir');
-        // $model->save();
 
         $pantai = Pantai::create([
             'nama' => $request->nama,
-            'lokasi' => $request->lokasi,
+            'link_maps' => $request->link_maps,
             'biaya_masuk' => $request->biaya_masuk,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -140,7 +129,7 @@ class PantaiController extends Controller
 
         // Meng-update atribut-atribut yang diinginkan
         $pantai->nama = $request->nama;
-        $pantai->lokasi = $request->lokasi;
+        $pantai->link_maps = $request->link_maps;
         $pantai->biaya_masuk = $request->biaya_masuk;
         $pantai->latitude = $request->latitude;
         $pantai->longitude = $request->longitude;

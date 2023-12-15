@@ -29,9 +29,9 @@
           </div>
 
           <div class="mb-3 row">
-          <label for="html5-text-input" class="col-md-2 col-form-label">Lokasi</label>
+          <label for="html5-text-input" class="col-md-2 col-form-label">Link</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="lokasi" required  id="lokasi">
+              <input class="form-control" type="text" name="link_maps" required  id="link_maps">
             </div>
           </div>
 
@@ -85,10 +85,10 @@
           <div class="col-md-10">
               <div class="form-group row">
                   <div class="col-md-6">
-                      <input class="form-control" type="text" name="jam_awal" required id="jam_awal" placeholder="dari">
+                      <input class="form-control" type="time" name="jam_awal" required id="jam_awal" placeholder="dari">
                   </div>
                   <div class="col-md-6">
-                      <input class="form-control" type="text" name="jam_akhir" required id="jam_akhir" placeholder="sampai">
+                      <input class="form-control" type="time" name="jam_akhir" required id="jam_akhir" placeholder="sampai">
                   </div>
               </div>
           </div>

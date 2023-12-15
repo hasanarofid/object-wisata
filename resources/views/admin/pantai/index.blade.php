@@ -36,7 +36,7 @@
                     <th>No</th>
                     <th>Foto</th>
                     <th>Nama</th>
-                    <th>Lokasi</th>
+                    <th>Link</th>
                     <th>Biaya Masuk</th>
                     <th>Fasilitas</th>
                     <th>Wahana</th>
@@ -75,7 +75,7 @@
                     @endif
                        </td>
                         <td> {{ $item->nama}} </td>
-                        <td> {{ $item->lokasi }} </td>
+                        <td> {{ $item->link_maps }} </td>
                         <td> {{ $item->biaya_masuk }} </td> 
                         <td>  @foreach ($facilities as $index => $fas)
                           @php

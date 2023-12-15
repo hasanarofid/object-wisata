@@ -45,7 +45,7 @@
           <div class="mb-3 row">
           <label for="html5-text-input" class="col-md-2 col-form-label">Lokasi</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="lokasi" required  id="lokasi" value="{{ $model->lokasi }}">
+              <input class="form-control" type="text" name="link_maps" required  id="link_maps" value="{{ $model->link_maps }}">
             </div>
           </div>
 
@@ -119,10 +119,10 @@ $selected = in_array($item->id, $decodedWahana);
           <div class="col-md-10">
               <div class="form-group row">
                   <div class="col-md-6">
-                      <input class="form-control" type="text" name="jam_awal" required id="jam_awal" value="{{ $waktu[0] }}" placeholder="dari">
+                      <input class="form-control" type="time" step="3600" name="jam_awal" required id="jam_awal" value="{{ $waktu[0] }}" placeholder="dari">
                   </div>
                   <div class="col-md-6">
-                      <input class="form-control" type="text" name="jam_akhir" required id="jam_akhir" value="{{ $waktu[1] }}" placeholder="sampai">
+                      <input class="form-control" type="time" step="3600" name="jam_akhir" required id="jam_akhir" value="{{ $waktu[1] }}" placeholder="sampai">
                   </div>
               </div>
           </div>
@@ -146,7 +146,17 @@ $selected = in_array($item->id, $decodedWahana);
 
 @endsection
 <script>
+document.getElementById('jam_awal').addEventListener('input', function() {
+    const input = this.value.replace(/[^0-9]/g, '').substring(0, 4);
+    const hours = input.substring(0, 2);
+    const minutes = input.substring(2, 4);
 
+    if (input.length > 2) {
+        this.value = `${hours}:${minutes}`;
+    } else {
+        this.value = input;
+    }
+});
   document.addEventListener('DOMContentLoaded', function () {
             var resetButton = document.querySelector('.reset');
     
