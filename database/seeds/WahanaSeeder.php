@@ -21,6 +21,8 @@ class WahanaSeeder extends Seeder
             ['nama' => 'Permainan Anak'],
             ['nama' => 'Kapal'],
             ['nama' => 'Banana Boat'],
+            ['nama' => 'Outbound'],
+            ['nama' => 'ATV'],
         ];
 
         foreach ($data as $row) {

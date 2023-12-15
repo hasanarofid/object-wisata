@@ -16,7 +16,7 @@ class CreateTabelPantai extends Migration
         Schema::create('tabel_pantai', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->nullable();
-            $table->string('gambar')->nullable();
+            $table->string('gambar', 500)->nullable();
             $table->string('jarak')->nullable();
             $table->string('biaya_masuk')->nullable();
             $table->string('fasilitas')->nullable();

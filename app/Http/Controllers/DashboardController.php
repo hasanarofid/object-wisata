@@ -139,7 +139,7 @@ class DashboardController extends Controller
         $minDistance = PHP_INT_MAX;
 
         foreach ($data as $pantai) {
-            // dd($pantai['longitude']);
+            // dd($pantai['latitude']);
             $distance = $this->calculateDistance(
                 $userLatitude,
                 $userLongitude,
@@ -164,6 +164,7 @@ class DashboardController extends Controller
         $lat1 = deg2rad($lat1);
         $lon1 = deg2rad($lon1);
         $lat2 = deg2rad($lat2);
+        // dd($lat2);
         $lon2 = deg2rad($lon2);
 
         $dlat = $lat2 - $lat1;
