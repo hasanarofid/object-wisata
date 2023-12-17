@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WahanaSeeder::class);
         $this->call(UlasanSeeder::class);
         $this->call(KriteriaaSeeder::class);
+        $this->call(AlternatifSeeder::class);
 
     }
 }

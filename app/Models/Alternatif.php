@@ -21,7 +21,7 @@ class Alternatif extends Model
         $pisK4 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K4')->first();
         $pisK5 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K5')->first();
         $pisK6 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K6')->first();
-     
+    //  dd($k2.' - '.$pisK2->bobot_kriteria);
         $jarakK1 = abs($k1 - $pisK1->bobot_kriteria);
         $jarakK2 = abs($k2 - $pisK2->bobot_kriteria);
         $jarakK3 = abs($k3 - $pisK3->bobot_kriteria);

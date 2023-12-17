@@ -19,6 +19,7 @@ class CreateKriteriaTable extends Migration
             $table->string('tipe_kriteria')->nullable();
             $table->string('skala_prioritas')->nullable();
             $table->string('bobot_kriteria')->nullable();
+            $table->string('matriks_perbandingan')->nullable();
             $table->timestamps();
         });
     }

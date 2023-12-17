@@ -53,13 +53,6 @@ class AlternatifController extends Controller
 // Ambil data kriteria dari tabel
 $kriteria = Kriteria::all();
 
-// Tentukan bobot kriteria
-// $matriksPerbandingan = [];
-// foreach ($kriteria as $item) {
-//     // Ubah skala prioritas menjadi array dan tambahkan ke matriks perbandingan
-//     // $skalaPrioritasArray = json_decode($item->skala_prioritas, true);
-//     $matriksPerbandingan[] = $item->skala_prioritas;
-// }
 $matriksPerbandingan = [
     [1, 4, 3, 1, 5, 2],
 ];
@@ -72,10 +65,6 @@ $eigenvector = [];
 for ($i = 0; $i < $jumlahKriteria; $i++) {
     list($eigenvalue[$i], $eigenvector[$i]) = $this->hitungEigen($matriksPerbandingan[0]); // Perubahan di sini
 }
-
-
-
-
 
 
 // 3. Normalisasi Bobot Kriteria
