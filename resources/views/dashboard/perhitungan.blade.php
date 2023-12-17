@@ -105,6 +105,7 @@
                                     <th class="text-center vertical-center">Nama Kriteria</th>
                                     <th class="text-center vertical-center">Tipe Kriteria</th>
                                     <th class="text-center vertical-center">Bobot</th>
+                                    <th class="text-center vertical-center">Matrik Perbandingan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,6 +118,7 @@
                                     <td>{{ $item->nama_kriteria }}</td>
                                     <td>{{ $item->tipe_kriteria }}</td>
                                     <td>{{ $item->bobot_kriteria }}</td>
+                                    <td>{{ $item->matriks_perbandingan }}</td>
                                 </tr>
                                     
                                 @endforeach

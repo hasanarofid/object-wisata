@@ -100,24 +100,28 @@ class DashboardController extends Controller
 
     // load pantai terdekat
     public function getNearestPantai(Request $request){
-        // dd($request);
         $userLatitude = $request->input('userLatitude');
         $userLongitude = $request->input('userLongitude');
+        $numberOfPantai = $request->input('numberOfPantai', 4); // Default to 4 if not provided
+        $offset = $request->input('offset', 0);
+    
+        // Retrieve a limited number of Pantai from the database with an offset
+        $data = Pantai::skip($offset)->take($numberOfPantai)->get();
+    
         $datapantai = [];
-        $data = Pantai::get(); // Your Pantai data array here;
-        foreach($data as $value){
+        foreach ($data as $value) {
             $datapantai[] = array(
-                'id'=>$value->id,
-                'nama'=>$value->nama,
-                'gambar'=>$value->gambar,
-                'latitude'=>$value->latitude,
-                'longitude'=>$value->longitude,
+                'id' => $value->id,
+                'nama' => $value->nama,
+                'gambar' => $value->gambar,
+                'latitude' => $value->latitude,
+                'longitude' => $value->longitude,
             );
         }
-
+    
         // Calculate the nearest Pantai
         $nearestPantai = $this->calculateNearestPantai($datapantai, $userLatitude, $userLongitude);
-        // dd($nearestPantai);
+    
         foreach ($datapantai as &$pantai) {
             $pantai['jarak'] = $this->calculateDistance(
                 $userLatitude,
@@ -126,11 +130,20 @@ class DashboardController extends Controller
                 $pantai['longitude']
             );
         }
+    
+        // Sort the array based on distance
         usort($datapantai, function ($a, $b) {
             return $a['jarak'] <=> $b['jarak'];
         });
-        // dd($datapantai);
-        return response()->json($datapantai);
+    
+        // If there are no more Pantai to load, set the flag
+        $hasMorePantai = count($datapantai) > 0;
+    
+        // Return the data along with the flag
+        return response()->json([
+            'datapantai' => $datapantai,
+            'hasMorePantai' => $hasMorePantai,
+        ]);
     }
 
     private function calculateNearestPantai($data, $userLatitude, $userLongitude)

@@ -125,7 +125,7 @@
             
             </div>
             
-            {{-- <div class="container text-center mt-4">
+            <div class="container text-center mt-4">
               
               <div class="row justify-content-center ">
                   <div class="col-4">
@@ -138,7 +138,7 @@
                       <hr style="border-radius: 20px; height: 4px;">
                   </div>
               </div>
-          </div> --}}
+          </div>
             
 
           </div>
@@ -289,138 +289,133 @@
 
 
     $('.select2').select2();
-    loadPantaiTerdekat();
+    // loadPantaiTerdekat();
 
-      var offset = {{ count($model) }}; // Initial offset
-
-      $('#load-more').on('click', function () {
-          $.ajax({
-              url: "{{ route('load-more') }}",
-              method: 'GET',
-              data: { offset: offset },
-              success: function (response) {
-                if (response.data.length > 0) {
-                        var container = $('#data-container');
-
-                        $.each(response.data, function (index, item) {
-                            // Append new card to the container
-                            container.append(`
-                                <div class="col-md-4 col-lg-3 mb-3">
-                                  <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">
-                                    <div class="card">
-                                        <div class="card-body position-relative">
-                                            <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill">
-                                                <i class="fa-solid fa-plus-minus"></i> ${item.jarak}
-                                            </button>
-                                            <img class="img-fluid d-block" src="{{ asset('pantai/') }}/${item.gambar}" alt="${item.gambar}" style="height: 200px;">
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="javascript:void(0);" class="card-link">${item.nama}</a>
-                                        </div>
-                                    </div>
-                                  </a>
-                                </div>
-                            `);
-                        });
-
-                        offset += response.data.length;
-                    } else {
-                        // No more data
-                        $('#load-more').attr('disabled', 'disabled').text('No more data');
-                    }
-              },
-              error: function (error) {
-                  console.log('Error:', error);
-              }
-          });
-      });
+   
   });
+  var displayedPantai = 4;
+var pantaiPerLoad = 4;
+var offset = 0; // Track the offset for loading more Pantai
 
-  function loadPantaiTerdekat(){
+function loadPantaiTerdekat() {
     if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var userLatitude = position.coords.latitude;
-                var userLongitude = position.coords.longitude;
-                $("#userLatitude").val(userLatitude);
-                $("#userLongitude").val(userLongitude);
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var userLatitude = position.coords.latitude;
+            var userLongitude = position.coords.longitude;
+            $("#userLatitude").val(userLatitude);
+            $("#userLongitude").val(userLongitude);
 
-                // Send user's location to the server to get the nearest Pantai
-                $.ajax({
-                    url: "{{ route('pantai-terdekat') }}",
-                    type: 'GET',
-                    data: {
-                        userLatitude: userLatitude,
-                        userLongitude: userLongitude
-                    },
-                    success: function (nearestPantai) {
-                      console.log(nearestPantai);
-                        // Handle the response, update UI, etc.
-                        var container = $('#data-container');
+            // Send user's location to the server to get the nearest Pantai
+            loadPantaiFromServer(userLatitude, userLongitude, displayedPantai);
+        });
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+}
 
-$.each(nearestPantai, function (index, item) {
-    // Initialize an empty string to store slide HTML
-    var slidesHtml = '';
+function loadPantaiFromServer(userLatitude, userLongitude, numberOfPantai) {
+    $.ajax({
+        url: "{{ route('pantai-terdekat') }}",
+        type: 'GET',
+        data: {
+            userLatitude: userLatitude,
+            userLongitude: userLongitude,
+            numberOfPantai: numberOfPantai,
+            offset: offset,
+        },
+        success: function (response) {
+            var nearestPantai = response.datapantai;
+            var hasMorePantai = response.hasMorePantai;
 
-    // Parse the JSON string into an array
-    var gambarArray = JSON.parse(item.gambar);
+            console.log(nearestPantai);
 
-    // Loop through each image for the current item
-    $.each(gambarArray, function (imgIndex, imgName) {
-        slidesHtml += `
-            <div class="swiper-slide" style="background-image: url('{{ asset('pantai/') }}/${imgName}')"></div>
-        `;
+            // Handle the response, update UI, etc.
+            appendPantaiToUI(nearestPantai);
+
+            // Show/hide the "See More" button based on the flag
+            if (hasMorePantai) {
+                $('#load-more').show();
+            } else {
+                $('#load-more').hide();
+            }
+        },
+        error: function (error) {
+            console.error('Error getting nearest Pantai:', error);
+        }
     });
+}
 
-    // Create a unique ID for each Swiper container
-    var swiperContainerId = 'swiper-container-' + index;
+function appendPantaiToUI(nearestPantai) {
+    var container = $('#data-container');
 
-    // Append the carousel container and slides to the container with reversed order
-    container.append(`
-        <div class="col-md-4 col-lg-3 mb-3">
-            <div class="card">
-                <div class="card-body position-relative">
-                    <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill" style="z-index: 2;">
-                        <i class="fa-solid fa-plus-minus"></i> ${item.jarak} KM
-                    </button>
-                    <div class="swiper-container swiper" id="${swiperContainerId}">
-                        <div class="swiper-wrapper">
-                            ${slidesHtml}
+    $.each(nearestPantai, function (index, item) {
+        // Initialize an empty string to store slide HTML
+        var slidesHtml = '';
+
+        // Parse the JSON string into an array
+        var gambarArray = JSON.parse(item.gambar);
+
+        // Loop through each image for the current item
+        $.each(gambarArray, function (imgIndex, imgName) {
+            slidesHtml += `
+                <div class="swiper-slide" style="background-image: url('{{ asset('pantai/') }}/${imgName}')"></div>
+            `;
+        });
+
+        // Create a unique ID for each Swiper container
+        var swiperContainerId = 'swiper-container-' + index;
+
+        // Append the carousel container and slides to the container with reversed order
+        container.append(`
+            <div class="col-md-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body position-relative">
+                        <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill" style="z-index: 2;">
+                            <i class="fa-solid fa-plus-minus"></i> ${item.jarak} KM
+                        </button>
+                        <div class="swiper-container swiper" id="${swiperContainerId}">
+                            <div class="swiper-wrapper">
+                                ${slidesHtml}
+                            </div>
+                            <div class="swiper-pagination"></div>
                         </div>
-                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="card-body">
+                        <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">${item.nama}</a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">${item.nama}</a>
-                </div>
             </div>
-        </div>
-    `);
+        `);
 
-    // Initialize Swiper after adding all slides for the current item
-    new Swiper(`#${swiperContainerId}`, {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        pagination: {
-            el: `#${swiperContainerId} .swiper-pagination`,
-            clickable: true,
-        },
+        // Initialize Swiper after adding all slides for the current item
+        new Swiper(`#${swiperContainerId}`, {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            pagination: {
+                el: `#${swiperContainerId} .swiper-pagination`,
+                clickable: true,
+            },
+        });
     });
+}
+
+
+function loadMorePantai() {
+    offset += pantaiPerLoad;
+
+    // Load additional Pantai from the server
+    loadPantaiFromServer($("#userLatitude").val(), $("#userLongitude").val(), displayedPantai);
+}
+
+// Initial load of Pantai
+$(document).ready(function () {
+    loadPantaiTerdekat();
 });
 
+// "See More" button click event
+$('#load-more').on('click', function () {
+    loadMorePantai();
+});
 
-
-
-                    },
-                    error: function (error) {
-                        console.error('Error getting nearest Pantai:', error);
-                    }
-                });
-            });
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-        }
-  }
-
-  
 </script>
 @endsection
