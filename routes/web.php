@@ -24,6 +24,7 @@ Route::get('/load-more', 'DashboardController@loadMore')->name('load-more');
 Route::get('/cari-rekomendasi', 'DashboardController@carirekomendasi')->name('cari-rekomendasi');
 Route::get('/detail/{id}/{no?}/{id_alternatif?}', 'DashboardController@detail')->name('detail');
 Route::post('/ulasan', 'DashboardController@ulasan')->name('ulasan');
+Route::get('/feed', 'DashboardController@sendfeed')->name('feed');
 Route::get('/perhitungan', 'DashboardController@perhitungan')->name('perhitungan');
 Route::get('/getNearestPantai', 'DashboardController@getNearestPantai')->name('pantai-terdekat');
 
@@ -46,6 +47,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('user.store');
          });
          // end route user
+
+         // route feedback
+        Route::prefix('feedback')->group(function () {
+            Route::get('/', [App\Http\Controllers\FeedController::class, 'index'])->name('feedback.index');
+         });
+         // end route feedback
 
           // route pantai
         Route::prefix('pantai')->group(function () {

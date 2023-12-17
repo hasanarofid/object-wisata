@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
 use App\Models\Fasilitas;
+use App\Models\Feedback;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use App\Models\Pantai;
@@ -229,6 +230,19 @@ class DashboardController extends Controller
             );
         }
         return view('dashboard.perhitungan',compact('datapantai','kriteria','alternatif','data'));
+    }
+
+    // sendfeed
+    public function sendfeed(Request $request){
+
+        $model = new Feedback();
+        $model->nama = $request->nama;
+        $model->email = $request->email;
+        $model->no_wa = $request->no_wa;
+        $model->feedback = $request->feedback;
+        $model->save();
+
+        return redirect()->route('home')->with('success', 'Feedback berhasil dikirim');
     }
 
 

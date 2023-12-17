@@ -158,6 +158,17 @@
                 </a>
               </li>
 
+              <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Data  Feedback</span>
+              </li>
+
+              <li class="menu-item {{ request()->is('admin/feedback*') ? 'active' : '' }}">
+                <a href="{{ route('feedback.index') }}" class="menu-link">
+                  <i class="menu-icon tf-icons fa fa-comments"></i>
+                  <div data-i18n="Feedback">Feedback</div>
+                </a>
+              </li>
+
 
           </ul>
         </aside>

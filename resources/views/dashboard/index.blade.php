@@ -145,6 +145,80 @@
           <!--/ Content -->
 
          
+          <div class="container text-center mt-4">
+              
+            <div class="row justify-content-center ">
+                <div class="col-4">
+                    <hr style="border-radius: 20px; height: 4px;">
+                </div>
+                <div class="col-auto"> <!-- Adjust the width based on your design -->
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalFeed">
+                    Beri Feedback
+                  </button>
+                </div>
+                <div class="col-4">
+                    <hr style="border-radius: 20px; height: 4px;">
+                </div>
+            </div>
+        </div>
+  <!-- Modal Fee -->
+  <div class="modal fade" id="modalFeed" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFeedTitle">Beri Feedback</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <form action="{{ route('feed') }}" method="GET" >
+        <div class="modal-body">
+            
+            <div class="mb-3 row">
+              <label for="html5-text-input" class="col-md-5 col-form-label">Nama</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Anda">
+              </div>
+            </div>
+
+            <div class="mb-3 row">
+              <label for="html5-text-input" class="col-md-5 col-form-label">Email</label>
+              <div class="col-md-7">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Email Anda">
+              </div>
+            </div>
+
+            <div class="mb-3 row">
+              <label for="html5-text-input" class="col-md-5 col-form-label">No Whatsapp</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control" name="no_wa" id="no_wa" placeholder="No Whatsapp Anda">
+              </div>
+            </div>
+
+            <div class="mb-3 row">
+              <label for="html5-text-input" class="col-md-5 col-form-label">FeedBack</label>
+              <div class="col-md-7">
+                <textarea placeholder="Berikan Feedback anda" class="form-control" name="feedback" id="feedback" cols="30" rows="10"></textarea>
+              </div>
+            </div>
+
+            
+          
+        </div>
+        <div class="modal-footer">
+          </button>
+          <button type="submit" class="btn btn-primary">Kirim Feedback</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Modal -->
@@ -368,6 +442,7 @@ function appendPantaiToUI(nearestPantai) {
         // Append the carousel container and slides to the container with reversed order
         container.append(`
             <div class="col-md-4 col-lg-3 mb-3">
+              <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">
                 <div class="card">
                     <div class="card-body position-relative">
                         <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill" style="z-index: 2;">
@@ -384,6 +459,7 @@ function appendPantaiToUI(nearestPantai) {
                         <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">${item.nama}</a>
                     </div>
                 </div>
+                </a>
             </div>
         `);
 
