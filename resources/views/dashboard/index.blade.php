@@ -72,18 +72,43 @@
 
           <!--/ Content -->
           <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">SIROWP </span> SERGAI</h4>
+            <!-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">SIROWP </span> SERGAI</h4> -->
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6 col-lg-6 d-flex align-items-center order-md-2">
+                <img src="{{ asset('cover-sirowp.png') }}" class="img-fluid" alt="Responsive image">
+                
+                </div>
+                <div class="col-md-6 col-lg-6 d-flex align-items-center">
+
+                  <div class="jumbotron">
+                <h1 class="display-4 fw-bold">SIROWP <span class="text-muted fw-light">SERGAI</span></h1>
+                <p class="lead text-black">
+                Sistem Rekomendasi Objek Wisata Pantai Kabupaten Serdang Bedagai merupakan sebuah website layanan masyarakat yang dapat mempermudah wisatawan dalam menentukan tujuan pantai yang ingin dikunjungi berdasarkan kebutuhan dan keinginannya.
+                </p>
+                <hr class="my-4">
+                  <div class="alert alert-success text-black" role="alert">
+                  <i class="fa-solid fa-circle-info"></i> Tekan tombol Cari Rekomendasi Pantai untuk memulai!
+                  </div>
+                <a class="btn btn-primary btn-lg" href="#" role="button" data-bs-toggle="modal"
+                        data-bs-target="#modalCenter">Cari Rekomendasi Pantai</a>
+              </div>
+                </div>
+              </div>
+            </div>
+
 
             <div class="container-fluid dashboard-header">
-              <div class="cover-image">
+              <!-- <div class="cover-image"> -->
                   <!-- Replace 'your-image.jpg' with the actual path to your cover image -->
-                  <img src="{{ asset('pantai-bg.jpg') }}" alt="Cover Image" class="img-fluid">
-              </div>
-              <div class="title-container">
+                  <!-- <img src="{{ asset('pantai-bg.jpg') }}" alt="Cover Image" class="img-fluid">
+              </div> -->
+              <!-- <div class="title-container">
                   <h4 class="fw-bold py-3 mb-4">
                       <span class="text-muted fw-light">SIROWP </span> SERGAI
                   </h4>
-              </div>
+              </div> -->
           </div>
           
 
@@ -93,14 +118,14 @@
            
             
 
-            <div class="container text-center mt-4">
+            <!-- <div class="container text-center mt-4">
               
                 <div class="row justify-content-center ">
                     <div class="col-4">
                         <hr style="border-radius: 20px; height: 4px;">
-                    </div>
-                    <div class="col-auto"> <!-- Adjust the width based on your design -->
-                      <button
+                    </div> -->
+                    <!-- <div class="col-auto"> Adjust the width based on your design -->
+                      <!-- <button
                         type="button"
                         class="btn btn-primary"
                         data-bs-toggle="modal"
@@ -111,8 +136,8 @@
                     <div class="col-4">
                         <hr style="border-radius: 20px; height: 4px;">
                     </div>
-                </div>
-            </div>
+                </div> -->
+            <!-- </div> -->
 
             <div class="row mb-5 mt-2" id="data-container">
                 <h5 class="my-4">Pantai Tedekat</h5>
@@ -445,7 +470,7 @@ function appendPantaiToUI(nearestPantai) {
               <a href="${'{{ $detailRoute }}'.replace(':itemId', item.id)}" class="card-link">
                 <div class="card">
                     <div class="card-body position-relative">
-                        <button class="card-subtitle text-muted position-absolute top-4 end-0 mr-2 rounded-pill" style="z-index: 2;">
+                        <button class="card-subtitle bg-info position-absolute top-4 end-0 mr-2 rounded-pill" style="z-index: 2;">
                             <i class="fa-solid fa-plus-minus"></i> ${item.jarak} KM
                         </button>
                         <div class="swiper-container swiper" id="${swiperContainerId}">
