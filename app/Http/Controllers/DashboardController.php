@@ -61,11 +61,39 @@ class DashboardController extends Controller
         $userLongitude = $request->input('userLongitude');
         $datapantai = [];
         $data = Pantai::get(); // Your Pantai data array here;
-        $alternatif = Alternatif::get();
-        $ranking = $alternatif->sortByDesc('skorQ');
-    
+        // $alternatif = Alternatif::get();
+
+        // $ranking = $alternatif->sortByDesc('skorQ');
+        $query = Alternatif::orderByDesc('skorQ');
+
+        if (!empty($request->biaya_masuk)) {
+            $query->where('k1', '<', $request->biaya_masuk);
+        }
+
+        if (!empty($request->jarak)) {
+            $query->where('k2', '<', $request->jarak);
+        }
+
+        if (!empty($request->fasilitas)) {
+            $query->where('k3', '<', $request->fasilitas);
+        }
+
+        if (!empty($request->wahana)) {
+            $query->where('k4', '<', $request->wahana);
+        }
+
+        if (!empty($request->time)) {
+            $query->where('k5', '<', $request->time);
+        }
+
+        if(!empty($request->rating)) {
+            $query->where('k6', '<', $request->rating);
+        }
+        
+        $results = $query->get();
+        // dd($results);
        $no = 1;
-        foreach($ranking as $value){
+        foreach($results as $value){
             // dd($value);
             $datapantai[] = array(
                 'id'=>$value->pantai->id,
