@@ -32,36 +32,53 @@
 }
 
 .rating {
-      display: inline-block;
-      unicode-bidi: bidi-override;
-      color: #ddd;
-      font-size: 24px;
-      height: 25px;
-      width: auto;
-      margin: 0;
-      padding: 0;
-      position: relative;
-    }
+  display: inline-block;
+  unicode-bidi: bidi-override;
+  color: #ddd;
+  font-size: 24px;
+  height: 25px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
 
-    .rating > span {
-      display: inline-block;
-      position: relative;
-      width: 1.1em;
-    }
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
 
-    .rating > span:hover:before,
-    .rating > span:hover ~ span:before {
-      content: "\2605";
-      position: absolute;
-      color: #ffcc00;
-    }
+.rating > span:hover:before,
+.rating > span.selected:before,
+.rating > span:hover ~ span:before,
+.rating > span.selected ~ span:before {
+  content: "\2605";
+  position: absolute;
+  color: #ffcc00;
+}
 
-    .rating > span:hover ~ span:before {
-      content: "\2605";
-      position: absolute;
-      color: #ddd;
-    }
+.rating > span:hover ~ span:before {
+  content: "\2605";
+  position: absolute;
+  color: #ddd;
+}
 
+#selected-rating {
+  font-size: 14px;
+  display: inline-block;
+  margin-top:10px;
+  margin-left: 10px; /* Sesuaikan margin sesuai kebutuhan */
+  vertical-align: middle; /* Agar teks berada di tengah secara vertikal */
+}
+
+.rating-value::before {
+  content: "(";
+}
+
+.rating-value::after {
+  content: ")";
+}
 </style>
 @section('css')
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -271,6 +288,7 @@
                       <span class="input-group-text">Rp</span>
                     </div>
                   </div>
+                  <div id="error-message-container" class="error-message" style="color:red"></div>
               </div>
               </div>
               <div class="mb-3 row">
@@ -282,12 +300,13 @@
                       <span class="input-group-text">m</span>
                     </div>
                   </div>
+                  <div id="error-message-container2" class="error-message" style="color:red"></div>
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-email-input" class="col-md-5 col-form-label">Fasilitas Minimal</label>
                 <div class="col-md-7">
-                  <select name="fasilitas" id="fasilitas" class="form-control" >
+                  <select name="fasilitas" id="fasilitas" class="form-control" required >
                     <option value="">.: Pilih :.</option>
                     <option value="Sangat Lengkap">Sangat Lengkap</option>
                     <option value="Lengkap">Lengkap</option>
@@ -299,7 +318,7 @@
               <div class="mb-3 row">
                 <label for="html5-url-input" class="col-md-5 col-form-label">Wahana Minimal</label>
                 <div class="col-md-7">
-                  <select name="wahana" id="wahana" class="form-control" >
+                  <select name="wahana" id="wahana" class="form-control" required >
                     <option value="">.: Pilih :.</option>
                     <option value="Sangat Lengkap">Sangat Lengkap</option>
                     <option value="Lengkap">Lengkap</option>
@@ -312,18 +331,21 @@
               <div class="mb-3 row">
                 <label for="html5-tel-input" class="col-md-5 col-form-label">Waktu Operasional Minimal</label>
                 <div class="col-md-7">
-                  <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input">
+                  <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input" required>
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="html5-password-input" class="col-md-5 col-form-label">Ulasan Minimal</label>
                 <div class="col-md-7">
-                  <div class="rating" id="star-rating">
-                    <span data-value="1">&#x2605;</span>
-                    <span data-value="2">&#x2605;</span>
-                    <span data-value="3">&#x2605;</span>
-                    <span data-value="4">&#x2605;</span>
-                    <span data-value="5">&#x2605;</span>
+                  <div class="input-group">
+                    <div class="rating">
+                      <span data-value="1">&#x2605;</span>
+                      <span data-value="2">&#x2605;</span>
+                      <span data-value="3">&#x2605;</span>
+                      <span data-value="4">&#x2605;</span>
+                      <span data-value="5">&#x2605;</span>
+                    </div>
+                    <div id="selected-rating" class="rating-value">0</div>
                   </div>
                   <input type="hidden" name="rating" id="rating-input">
                 </div>
@@ -348,44 +370,90 @@
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Page JS -->
 
 
 <script>
-  $(document).ready(function () {
+  function formatRupiah(angka) {
+      var number_string = angka.toString().replace(/[^,\d]/g, ''),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
+      // tambahkan titik jika yang diinput lebih dari satu ribu
+      if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
 
-    let selectedRating = 0;
-
-    // Handle click event on stars
-    $('#star-rating span').on('click', function () {
-      // Get the selected rating value
-      const ratingValue = $(this).data('value');
-
-      // Update the selected rating variable
-      selectedRating = ratingValue;
-      $('#rating-input').val(selectedRating);
-
-      // Update the UI to reflect the selected rating
-      updateRatingUI();
-
-      // You can also perform additional actions based on the selected rating here
-      // For example, send the rating to the server or perform other actions.
-    });
-
-    // Function to update the UI based on the selected rating
-    function updateRatingUI() {
-      // Remove the hover effect from all stars
-      $('#star-rating span').css('color', '');
-
-      // Apply the hover effect to the selected number of stars
-      $('#star-rating span:lt(' + selectedRating + ')').css('color', '#ffcc00');
-
-      // Update the selected rating text
-      $('#selected-rating').text('Selected Rating: ' + selectedRating);
+      rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+      return 'Rp ' + rupiah;
     }
 
+
+  $(document).ready(function () {
+  
+
+      // Fungsi untuk memformat input setiap kali diketik
+      $('#biaya_masuk').on('input', function() {
+        var inputVal = $(this).val();
+        var formattedValue = formatRupiah(inputVal);
+        $(this).val(formattedValue);
+
+        // Validasi jika angka kurang dari 8000
+        var numericValue = parseInt(inputVal.replace(/[^\d]/g, ''));
+        var errorContainer = $('#error-message-container');
+
+        if (numericValue < 8000) {
+          errorContainer.text('Biaya tidak boleh kurang dari 8000').show();
+        } else {
+          errorContainer.hide().text('');
+        }
+      });
+
+      $('#jarak').on('input', function() {
+        var inputValue = $(this).val().replace(/[^\d]/g, ''); // Hapus karakter selain angka
+        $(this).val(inputValue);
+
+        // Validasi minimal 1000
+        var numericValue = parseInt(inputValue);
+        var errorContainer = $('#error-message-container2');
+
+        if (isNaN(numericValue) || numericValue < 1000) {
+          errorContainer.text('Jarak minimal 1000 meter').show();
+        } else {
+          errorContainer.hide().text('');
+        }
+      });
+
+      let selectedRating = 0;
+
+// Handle click event on stars
+$('.rating span').on('click', function () {
+  // Get the selected rating value
+  const ratingValue = $(this).data('value');
+
+  // Update the selected rating variable
+  selectedRating = ratingValue;
+  $('#rating-input').val(selectedRating);
+
+  // Update the UI to reflect the selected rating
+  updateRatingUI();
+});
+
+// Function to update the UI based on the selected rating
+function updateRatingUI() {
+  // Remove the hover effect from all stars
+  $('.rating span').css('color', '');
+
+  // Apply the hover effect to the selected number of stars
+  $('.rating span:lt(' + selectedRating + ')').addClass('selected');
+
+  // Update the selected rating text
+  $('#selected-rating').text(selectedRating);
+}
 
     $('.select2').select2();
     // loadPantaiTerdekat();
