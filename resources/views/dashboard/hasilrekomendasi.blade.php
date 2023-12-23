@@ -32,7 +32,6 @@
                         </div>
                         <div style="text-align: right;" class="col-6 text-right mt-2 ml-10 mb-2">
                             <a target="_blank" href="{{ route('perhitungan', request()->all()) }}" class="btn btn-primary">Perhitungan</a>
-                            <a target="_blank" href="{{ route('perhitungan') }}" class="btn btn-primary">Perhitungan</a>
                         </div>
                     </div>
                     <br>
