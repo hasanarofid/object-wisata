@@ -416,6 +416,7 @@ $('.rating').on('click', function(e) {
   const containerWidth = $(this).width();
   const ratingValue = (e.pageX - $(this).offset().left) / containerWidth * 5;
   selectedRating = Math.floor(ratingValue) + (ratingValue - Math.floor(ratingValue));
+  $("#rating-input").val(selectedRating.toFixed(1));
   $('#selected-rating').text(selectedRating.toFixed(1));
 
   // Validation: Check if rating is less than 3.5
@@ -468,9 +469,10 @@ $('.rating').on('click', function(e) {
 
    
   });
-  var displayedPantai = 4;
+var displayedPantai = 4;
 var pantaiPerLoad = 4;
 var offset = 0; // Track the offset for loading more Pantai
+
 
 function loadPantaiTerdekat() {
     if (navigator.geolocation) {
