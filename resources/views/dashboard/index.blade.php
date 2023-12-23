@@ -347,6 +347,7 @@
                     </div>
                     <div id="selected-rating" class="rating-value">0</div>
                   </div>
+                  <div id="error-message-container3" class="error-message" style="color:red"></div>
                   <input type="hidden" name="rating" id="rating-input">
                 </div>
               </div>
@@ -394,6 +395,39 @@
 
 
   $(document).ready(function () {
+
+    let selectedRating = 0;
+
+// Handle mousemove event on stars
+$('.rating').on('mousemove', function(e) {
+  const containerWidth = $(this).width();
+  const ratingValue = (e.pageX - $(this).offset().left) / containerWidth * 5;
+  const percentage = (ratingValue - Math.floor(ratingValue)) * 100;
+  $(this).find('span').css('color', '');
+  $(this).find('span:lt(' + Math.floor(ratingValue) + ')').css('color', '#ffcc00');
+  if (percentage > 0) {
+    const nextStar = Math.floor(ratingValue) + 1;
+    $(this).find('span').eq(nextStar - 1).css('color', 'rgba(255, 204, 0, ' + (percentage / 100) + ')');
+  }
+});
+
+// Handle click event on stars
+$('.rating').on('click', function(e) {
+  const containerWidth = $(this).width();
+  const ratingValue = (e.pageX - $(this).offset().left) / containerWidth * 5;
+  selectedRating = Math.floor(ratingValue) + (ratingValue - Math.floor(ratingValue));
+  $('#selected-rating').text(selectedRating.toFixed(1));
+
+  // Validation: Check if rating is less than 3.5
+  if (selectedRating < 3.5) {
+    $('#error-message-container3').text('Rating harus lebih dari  3.5');
+    // Optionally, you can reset the selected rating
+    // selectedRating = 0;
+    // $('#selected-rating').text(selectedRating.toFixed(1));
+  } else {
+    $('#error-message-container3').text('');
+  }
+});
   
 
       // Fungsi untuk memformat input setiap kali diketik
@@ -428,32 +462,6 @@
         }
       });
 
-      let selectedRating = 0;
-
-// Handle click event on stars
-$('.rating span').on('click', function () {
-  // Get the selected rating value
-  const ratingValue = $(this).data('value');
-
-  // Update the selected rating variable
-  selectedRating = ratingValue;
-  $('#rating-input').val(selectedRating);
-
-  // Update the UI to reflect the selected rating
-  updateRatingUI();
-});
-
-// Function to update the UI based on the selected rating
-function updateRatingUI() {
-  // Remove the hover effect from all stars
-  $('.rating span').css('color', '');
-
-  // Apply the hover effect to the selected number of stars
-  $('.rating span:lt(' + selectedRating + ')').addClass('selected');
-
-  // Update the selected rating text
-  $('#selected-rating').text(selectedRating);
-}
 
     $('.select2').select2();
     // loadPantaiTerdekat();
