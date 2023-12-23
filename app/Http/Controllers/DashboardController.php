@@ -340,16 +340,78 @@ class DashboardController extends Controller
 
     }
 
-    public function perhitungan(){
+    public function perhitungan(Request $request){
+// dd($request);
 
         $datapantai = [];
         $data = Pantai::get(); // Your Pantai data array here;
         $alternatif = Alternatif::get();
         $kriteria = Kriteria::get();
-        $ranking = $alternatif->sortByDesc('skorQ');
+        // $ranking = $alternatif->sortByDesc('skorQ');
+        $query = Alternatif::orderByDesc('skorQ');
+
+        if (!empty($request->biaya_masuk)) {
+            $numericString = preg_replace('/[^0-9]/', '', $request->biaya_masuk);
+
+            // Convert the numeric string to an integer
+            $k1 = (int) $numericString;
+
+            $query->where('k1', '<', $k1);
+        }
+
+        if (!empty($request->jarak)) {
+            $query->where('k2', '>', (int)$request->jarak);
+        }
+
+        if (!empty($request->fasilitas)) {
+            switch ($request->fasilitas) {
+                case 'Sangat Lengkap':
+                    $query->whereBetween('k3', [7,8,9, 10]);
+                    break;
+                case 'Lengkap':
+                    $query->whereBetween('k3', [5, 6]);
+                    break;
+                case 'Kurang Lengkap':
+                    $query->whereBetween('k3', [0,1,2,3, 4]);
+                    break;
+                default:
+                    // Handle other cases or provide a default behavior
+                    break;
+            }
+        }
+
+        if (!empty($request->wahana)) {
+            switch ($request->wahana) {
+                case 'Sangat Lengkap':
+                    $query->whereBetween('k4', [5, 6]);
+                    break;
+                case 'Lengkap':
+                    $query->whereBetween('k4', [3,4]);
+                    break;
+                case 'Kurang Lengkap':
+                    $query->whereBetween('k4', [0,1]);
+                    break;
+                default:
+                    // Handle other cases or provide a default behavior
+                    break;
+            }
+        }
+        
+
+        if (!empty($request->waktu_operasional)) {
+            $jamOperasional = intval($request->waktu_operasional);
+            // dd($jamOperasional);
+            $query->where('k5', '<=', $jamOperasional);
+        }
+
+        if(!empty($request->rating)) {
+            $query->where('k6', '<=', $request->rating);
+        }
+        
+        $results = $query->get();
     
        $no = 1;
-        foreach($ranking as $value){
+        foreach($results as $value){
             // dd($value);
             $datapantai[] = array(
                 'id'=>$value->pantai->id,
