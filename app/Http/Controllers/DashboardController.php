@@ -56,38 +56,138 @@ class DashboardController extends Controller
 
     //carirekomendasi
     public function carirekomendasi(Request $request){
-        dd($request->input()); 
+        // dd($request->input()); 
         $userLatitude = $request->input('userLatitude');
         $userLongitude = $request->input('userLongitude');
-        $datapantai = [];
         $data = Pantai::get(); // Your Pantai data array here;
+        $datapantai2 = [];
+        foreach ($data as $value) {
+            $datapantai2[] = array(
+                'id' => $value->id,
+                'nama' => $value->nama,
+                'gambar' => $value->gambar,
+                'latitude' => $value->latitude,
+                'longitude' => $value->longitude,
+            );
+        }
+        
+        // Calculate the nearest Pantai
+        $nearestPantai = $this->calculateNearestPantai($datapantai2, $userLatitude, $userLongitude);
+        
+        foreach ($datapantai2 as $pantai) {
+            $pantai['jarak'] = $this->calculateDistance(
+                $userLatitude,
+                $userLongitude,
+                $pantai['latitude'],
+                $pantai['longitude']
+            );
+           $update =  Pantai::where('id', $pantai['id'])
+            ->update(['jarak' => $pantai['jarak']]);
+            $update2 = Alternatif::where('pantai_id', $pantai['id'])
+            ->update(['k2' => $pantai['jarak']]);
+        }
+        
+        //update alternatif
+        $alternatif = Alternatif::get();
+        foreach ($alternatif as $row) {
+            // dd($row['k1']);
+            $alternatifInstance = new Alternatif;
+            $row['skorR'] = $alternatifInstance->hitungSkorR(
+                $row['k1'],
+                $row['k2'],
+                $row['k3'],
+                $row['k4'],
+                $row['k5'],
+                $row['k6']
+            );
+           
+            $row['skorS'] = $alternatifInstance->hitungSkorS(
+                $row['k1'],
+                $row['k2'],
+                $row['k3'],
+                $row['k4'],
+                $row['k5'],
+                $row['k6']
+            );
+
+            $row['skorQ'] = $alternatifInstance->hitungSkorQ($row['skorR'],$row['skorS']);
+            // dd($row['skorQ']);
+
+            $update2 = Alternatif::where('id', $row['id'])
+            ->update([
+                'skorR' => $row['skorR'],
+                'skorS' => $row['skorS'],
+                'skorQ' => $row['skorQ'],
+            ]);
+
+        }
+
+        // dd($data);
+
+
+        $datapantai = [];
+      
         // $alternatif = Alternatif::get();
 
         // $ranking = $alternatif->sortByDesc('skorQ');
         $query = Alternatif::orderByDesc('skorQ');
 
         if (!empty($request->biaya_masuk)) {
-            $query->where('k1', '<', $request->biaya_masuk);
+            $numericString = preg_replace('/[^0-9]/', '', $request->biaya_masuk);
+
+            // Convert the numeric string to an integer
+            $k1 = (int) $numericString;
+
+            $query->where('k1', '<', $k1);
         }
 
         if (!empty($request->jarak)) {
-            $query->where('k2', '<', $request->jarak);
+            $query->where('k2', '>', (int)$request->jarak);
         }
 
         if (!empty($request->fasilitas)) {
-            $query->where('k3', '<', $request->fasilitas);
+            switch ($request->fasilitas) {
+                case 'Sangat Lengkap':
+                    $query->whereBetween('k3', [7,8,9, 10]);
+                    break;
+                case 'Lengkap':
+                    $query->whereBetween('k3', [5, 6]);
+                    break;
+                case 'Kurang Lengkap':
+                    $query->whereBetween('k3', [0,1,2,3, 4]);
+                    break;
+                default:
+                    // Handle other cases or provide a default behavior
+                    break;
+            }
         }
 
         if (!empty($request->wahana)) {
-            $query->where('k4', '<', $request->wahana);
+            switch ($request->wahana) {
+                case 'Sangat Lengkap':
+                    $query->whereBetween('k4', [5, 6]);
+                    break;
+                case 'Lengkap':
+                    $query->whereBetween('k4', [3,4]);
+                    break;
+                case 'Kurang Lengkap':
+                    $query->whereBetween('k4', [0,1]);
+                    break;
+                default:
+                    // Handle other cases or provide a default behavior
+                    break;
+            }
         }
+        
 
-        if (!empty($request->time)) {
-            $query->where('k5', '<', $request->time);
+        if (!empty($request->waktu_operasional)) {
+            $jamOperasional = intval($request->waktu_operasional);
+            // dd($jamOperasional);
+            $query->where('k5', '<=', $jamOperasional);
         }
 
         if(!empty($request->rating)) {
-            $query->where('k6', '<', $request->rating);
+            $query->where('k6', '<=', $request->rating);
         }
         
         $results = $query->get();

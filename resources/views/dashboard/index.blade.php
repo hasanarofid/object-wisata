@@ -285,7 +285,7 @@
                 <label for="html5-text-input" class="col-md-5 col-form-label">Biaya Masuk Maksimal</label>
                 <div class="col-md-7">
                   <div class="input-group">
-                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk  Maksimal">
+                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk  Maksimal" required>
                     <div class="input-group-append">
                       <span class="input-group-text">Rp</span>
                     </div>
@@ -297,7 +297,7 @@
                 <label for="html5-search-input" class="col-md-5 col-form-label">Jarak Maksimal</label>
                 <div class="col-md-7">
                   <div class="input-group">
-                    <input type="text" class="form-control" name="jarak" id="jarak" placeholder="Jarak Maksimal">
+                    <input type="text" class="form-control" name="jarak" id="jarak" placeholder="Jarak Maksimal" required>
                     <div class="input-group-append">
                       <span class="input-group-text">m</span>
                     </div>

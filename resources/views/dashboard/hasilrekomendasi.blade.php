@@ -36,7 +36,14 @@
                     </div>
                     <br>
 
-                    
+                    <div class="alert alert-success text-black" role="alert">
+                        @if (count($datapantai) >= 15)
+                            <i class="fa-solid fa-circle-info"></i> Alternatif Rating 1 sampai 2 adalah pilihan terbaik
+                        @elseif (count($datapantai) < 10)
+                            <i class="fa-solid fa-circle-info"></i> Alternatif Rating 1 adalah pilihan terbaik
+                        @endif
+
+                        </div>
                     <div class="row g-0 table-responsive" >
                         <table class="table table-bordered  ">
                             <thead class="text-center bg-success">
