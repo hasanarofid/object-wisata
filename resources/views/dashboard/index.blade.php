@@ -197,8 +197,7 @@
                   <button
                     type="button"
                     class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalFeed">
+                  >
                     Beri Feedback
                   </button>
                 </div>
@@ -208,59 +207,62 @@
             </div>
         </div>
   <!-- Modal Fee -->
-  <div class="modal fade" id="modalFeed" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalFeedTitle">Beri Feedback</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <form action="{{ route('feed') }}" method="GET" >
-        <div class="modal-body">
-            
+ <br>
+ <div class="container mt-2">
+  <div class="row justify-content-center align-items-center">
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+      <div class="card">
+          <form action="{{ route('feed') }}" method="GET">
+              <div class="card-body">
+                  <!-- Your form content goes here -->
+
             <div class="mb-3 row">
               <label for="html5-text-input" class="col-md-5 col-form-label">Nama</label>
               <div class="col-md-7">
                   <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Anda">
               </div>
             </div>
-
+  
             <div class="mb-3 row">
               <label for="html5-text-input" class="col-md-5 col-form-label">Email</label>
               <div class="col-md-7">
                   <input type="email" class="form-control" name="email" id="email" placeholder="Email Anda">
               </div>
             </div>
-
+  
             <div class="mb-3 row">
               <label for="html5-text-input" class="col-md-5 col-form-label">No Whatsapp</label>
               <div class="col-md-7">
                   <input type="text" class="form-control" name="no_wa" id="no_wa" placeholder="No Whatsapp Anda">
               </div>
             </div>
-
+  
             <div class="mb-3 row">
               <label for="html5-text-input" class="col-md-5 col-form-label">FeedBack</label>
               <div class="col-md-7">
                 <textarea placeholder="Berikan Feedback anda" class="form-control" name="feedback" id="feedback" cols="30" rows="10"></textarea>
               </div>
             </div>
-
+  
             
-          
-        </div>
-        <div class="modal-footer">
-          </button>
-          <button type="submit" class="btn btn-primary">Kirim Feedback</button>
-        </div>
-        </form>
+
+              </div>
+              <div class="modal-footer">
+                  <!-- Your form buttons go here -->
+                  <button type="submit" class="btn btn-primary">Kirim Feedback</button>
+              </div>
+          </form>
       </div>
-    </div>
   </div>
+</div>
+
+
+
 
 
   <!-- Modal -->
