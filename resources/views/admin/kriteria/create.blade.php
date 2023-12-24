@@ -2,10 +2,15 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">Kriteria /</span> Add User</h4>
+    <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">Kriteria /</span> Add Kriteria</h4>
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
+          @if($errors->has('nama'))
+          <div class="alert alert-danger">
+              {{ $errors->first('nama') }}
+          </div>
+      @endif
             <form id="myForm"  action="{{ route('kriteria.store') }}" method="POST">
                 @csrf
           <div class="mb-3 row">

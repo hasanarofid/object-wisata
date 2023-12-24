@@ -15,12 +15,12 @@ class Alternatif extends Model
 
     function hitungSkorR($k1, $k2, $k3, $k4, $k5, $k6) {
         // Hitung jarak antara alternatif dan PIS untuk setiap kriteria
-        $pisK1 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K1')->first();
-        $pisK2 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K2')->first();
-        $pisK3 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K3')->first();
-        $pisK4 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K4')->first();
-        $pisK5 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K5')->first();
-        $pisK6 = Kriteria::select('bobot_kriteria')->where('nama_kriteria','K6')->first();
+        $pisK1 = Kriteria::select('bobot_kriteria')->where('nama_alternatif','K1')->first();
+        $pisK2 = Kriteria::select('bobot_kriteria')->where('nama_alternatif','K2')->first();
+        $pisK3 = Kriteria::select('bobot_kriteria')->where('nama_alternatif','K3')->first();
+        $pisK4 = Kriteria::select('bobot_kriteria')->where('nama_alternatif','K4')->first();
+        $pisK5 = Kriteria::select('bobot_kriteria')->where('nama_alternatif','K5')->first();
+        $pisK6 = Kriteria::select('bobot_kriteria')->where('nama_alternatif','K6')->first();
     //  dd($k2.' - '.$pisK2->bobot_kriteria);
         $jarakK1 = abs($k1 - $pisK1->bobot_kriteria);
         $jarakK2 = abs($k2 - $pisK2->bobot_kriteria);
@@ -37,12 +37,12 @@ class Alternatif extends Model
 
     function hitungSkorS($k1, $k2, $k3, $k4, $k5, $k6) {
         // Hitung jarak antara alternatif dan NIS untuk setiap kriteria
-        $nisK1 = Kriteria::select('skala_prioritas')->where('nama_kriteria','K1')->first();
-        $nisK2 = Kriteria::select('skala_prioritas')->where('nama_kriteria','K2')->first();
-        $nisK3 = Kriteria::select('skala_prioritas')->where('nama_kriteria','K3')->first();
-        $nisK4 = Kriteria::select('skala_prioritas')->where('nama_kriteria','K4')->first();
-        $nisK5 = Kriteria::select('skala_prioritas')->where('nama_kriteria','K5')->first();
-        $nisK6 = Kriteria::select('skala_prioritas')->where('nama_kriteria','K6')->first();
+        $nisK1 = Kriteria::select('skala_prioritas')->where('nama_alternatif','K1')->first();
+        $nisK2 = Kriteria::select('skala_prioritas')->where('nama_alternatif','K2')->first();
+        $nisK3 = Kriteria::select('skala_prioritas')->where('nama_alternatif','K3')->first();
+        $nisK4 = Kriteria::select('skala_prioritas')->where('nama_alternatif','K4')->first();
+        $nisK5 = Kriteria::select('skala_prioritas')->where('nama_alternatif','K5')->first();
+        $nisK6 = Kriteria::select('skala_prioritas')->where('nama_alternatif','K6')->first();
       
         $jarakK1 = abs($k1 - $nisK1->skala_prioritas);
         $jarakK2 = abs($k2 - $nisK2->skala_prioritas);

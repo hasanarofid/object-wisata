@@ -6,6 +6,11 @@
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
+          @if($errors->has('nama'))
+          <div class="alert alert-danger">
+              {{ $errors->first('nama') }}
+          </div>
+      @endif
             <form id="myForm" action="{{ route('kriteria.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="id" value="{{ $model->id }}">

@@ -15,34 +15,46 @@ class KriteriaaSeeder extends Seeder
     {
         $data = [
             [
-                'nama_kriteria' => 'K1',
-                'tipe_kriteria' => 'Biaya masuk (Rp)',
+                'nama_alternatif'=>'K1',
+                'nama_kriteria' => 'Biaya masuk',
+                'tipe_kriteria' => 'Cost (Min)',
                 'skala_prioritas' => '1',
+                'bobot_kriteria'=>'1',
             ],
             [
-                'nama_kriteria' => 'K2',
-                'tipe_kriteria' => 'Jarak (m) ',
+                'nama_alternatif'=>'K2',
+                'nama_kriteria' => 'Jarak',
+                'tipe_kriteria' => 'Cost (Min)',
                 'skala_prioritas' => '4',
+                'bobot_kriteria'=>'4',
             ],
             [
-                'nama_kriteria' => 'K3',
-                'tipe_kriteria' => 'Fasilitas',
+                'nama_alternatif'=>'K3',
+                'nama_kriteria' => 'Fasilitas',
+                'tipe_kriteria' => 'Benefit (Max)',
                 'skala_prioritas' => '3',
+                'bobot_kriteria'=>'3',
             ],
             [
-                'nama_kriteria' => 'K4',
-                'tipe_kriteria' => 'Wahana',
+                'nama_alternatif'=>'K4',
+                'nama_kriteria' => 'Wahana',
+                'tipe_kriteria' => 'Benefit (Max)',
                 'skala_prioritas' => '1',
+                'bobot_kriteria'=>'1',
             ],
             [
-                'nama_kriteria' => 'K5',
-                'tipe_kriteria' => 'Waktu Operasional (Jam) ',
+                'nama_alternatif'=>'K5',
+                'nama_kriteria' => 'Waktu Operasional',
+                'tipe_kriteria' => 'Benefit (Max)',
                 'skala_prioritas' => '5',
+                'bobot_kriteria'=>'5',
             ],
             [
-                'nama_kriteria' => 'K6',
-                'tipe_kriteria' => 'Ulasan (Bintang)',
+                'nama_alternatif'=>'K6',
+                'nama_kriteria' => 'Ulasan',
+                'tipe_kriteria' => 'Benefit (Max)',
                 'skala_prioritas' => '2',
+                'bobot_kriteria'=>'2',
             ],
           
         ];
@@ -52,6 +64,8 @@ class KriteriaaSeeder extends Seeder
 
             DB::table('kriteria')->insert([
                 'nama_kriteria' => $row['nama_kriteria'],
+                'bobot_kriteria' => $row['bobot_kriteria'],
+                'nama_alternatif' => $row['nama_alternatif'],
                 'tipe_kriteria' => $row['tipe_kriteria'],
                 'skala_prioritas' => $row['skala_prioritas']
             ]);

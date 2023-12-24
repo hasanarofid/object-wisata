@@ -36,6 +36,15 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'unique' => 'Kolom :attribute sudah ada sebelumnya.',
+            // Tambahkan pesan lainnya sesuai kebutuhan Anda
+        ];
+    
+        $request->validate([
+            'nama' => 'required|unique:kriteria|max:255',
+            // tambahkan validasi lainnya sesuai kebutuhan
+        ], $messages);
         if(!empty($request->id)){
             $model = Kriteria::find($request->id);
         }else{
