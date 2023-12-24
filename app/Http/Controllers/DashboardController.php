@@ -164,7 +164,7 @@ class DashboardController extends Controller
             // Convert the numeric string to an integer
             $k1 = (int) $numericString;
 
-            $query->where('k1', '<', $k1);
+            $query->where('k1', '>', $k1);
         }
 
         if (!empty($request->jarak)) {
@@ -215,9 +215,9 @@ class DashboardController extends Controller
         if(!empty($request->rating)) {
             $query->where('k6', '<=', $request->rating);
         }
-        
+        // dd($query);
         $results = $query->get();
-        // dd($results);
+        // dd($results);    
        $no = 1;
         foreach($results as $value){
             // dd($value);
@@ -382,7 +382,7 @@ class DashboardController extends Controller
             // Convert the numeric string to an integer
             $k1 = (int) $numericString;
 
-            $query->where('k1', '<', $k1);
+            $query->where('k1', '>', $k1);
         }
 
         if (!empty($request->jarak)) {

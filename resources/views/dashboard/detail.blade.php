@@ -7,23 +7,54 @@
 @endsection
 
 <style>
-  .rating {
-      display: inline-block;
-      unicode-bidi: bidi-override;
-      color: #ddd;
-      font-size: 24px;
-      height: 25px;
-      width: auto;
-      margin: 0;
-      padding: 0;
-      position: relative;
-    }
+.rating {
+  display: inline-block;
+  unicode-bidi: bidi-override;
+  color: #ddd;
+  font-size: 24px;
+  height: 25px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
 
-    .rating > span {
-      display: inline-block;
-      position: relative;
-      width: 1.1em;
-    }
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+
+.rating > span:hover:before,
+.rating > span.selected:before,
+.rating > span:hover ~ span:before,
+.rating > span.selected ~ span:before {
+  content: "\2605";
+  position: absolute;
+  color: #ffcc00;
+}
+
+.rating > span:hover ~ span:before {
+  content: "\2605";
+  position: absolute;
+  color: #ddd;
+}
+
+#selected-rating {
+  font-size: 14px;
+  display: inline-block;
+  margin-top:10px;
+  margin-left: 10px; /* Sesuaikan margin sesuai kebutuhan */
+  vertical-align: middle; /* Agar teks berada di tengah secara vertikal */
+}
+
+.rating-value::before {
+  content: "(";
+}
+
+.rating-value::after {
+  content: ")";
+}
 
   
     .filled-star:before {
@@ -154,23 +185,27 @@
                                   <div  class="row mb-3">
                                     <label style="text-align: left" class="col-sm-4 col-form-label" for="basic-default-name">Ulasan</label>
                                     <div class="col-sm-8">
-                                      <div class="rating" id="star-rating">
-                                        <span data-value="1">&#x2605;</span>
-                                        <span data-value="2">&#x2605;</span>
-                                        <span data-value="3">&#x2605;</span>
-                                        <span data-value="4">&#x2605;</span>
-                                        <span data-value="5">&#x2605;</span>
+                                   
+                                      <div class="input-group">
+                                        <div class="rating" id="star-rating">
+                                          <span data-value="1">&#x2605;</span>
+                                          <span data-value="2">&#x2605;</span>
+                                          <span data-value="3">&#x2605;</span>
+                                          <span data-value="4">&#x2605;</span>
+                                          <span data-value="5">&#x2605;</span>
+                                        </div>
+                                        <div id="selected-rating" class="rating-value">0</div>
                                       </div>
 
                                     </div>
                                   </div>
-                                  <button
+                                  {{-- <button
                         type="button"
                         class="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#myModal">
                         Beri Ulasan
-                      </button>
+                      </button> --}}
                                 
                               </div>
 
@@ -309,7 +344,8 @@ function hitungjarak(latitude,longitude){
 
     }
 
-        var ratingValue = parseFloat('{{ $averageRating }}');
+        var ratingValue = parseFloat('{{ $model->ulasan }}');
+    $('#selected-rating').text(ratingValue.toFixed(1));
 
 // Update the star elements based on the rating value
 $('#star-rating span').each(function(index, element) {

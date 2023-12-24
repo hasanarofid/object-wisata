@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UlasanSeeder::class);
         $this->call(KriteriaaSeeder::class);
         $this->call(AlternatifSeeder::class);
+        $this->call(AhpMatrixSeeder::class);
 
     }
 }
