@@ -6,6 +6,11 @@
     <div class="card ">
         <h5 class="card-header">Form</h5>
         <div class="card-body">
+          @if($errors->has('nama'))
+          <div class="alert alert-danger">
+              {{ $errors->first('nama') }}
+          </div>
+      @endif
             <form action="{{ route('wahana.store') }}" method="POST" id="myForm">
                 @csrf
           <div class="mb-3 row">

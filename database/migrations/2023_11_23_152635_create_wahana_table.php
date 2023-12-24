@@ -15,7 +15,7 @@ class CreateWahanaTable extends Migration
     {
         Schema::create('wahana', function (Blueprint $table) {
             $table->id();
-            $table->string('nama')->nullable();
+        $table->string('nama')->unique();
             $table->timestamps();
         });
     }

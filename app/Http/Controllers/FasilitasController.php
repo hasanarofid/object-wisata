@@ -36,6 +36,11 @@ class FasilitasController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|unique:fasilitas|max:255',
+            // tambahkan validasi lainnya sesuai kebutuhan
+        ]);
+    
         if(!empty($request->id)){
             $model = Fasilitas::find($request->id);
 
