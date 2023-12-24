@@ -36,6 +36,13 @@
           </div>
 
           <div class="mb-3 row">
+            <label for="html5-text-input" class="col-md-2 col-form-label">Ulasan</label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" name="ulasan" required  id="ulasan">
+              </div>
+            </div>
+
+          <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Latitude & Longitude</label>
             <div class="col-md-10">
                 <div class="form-group row">

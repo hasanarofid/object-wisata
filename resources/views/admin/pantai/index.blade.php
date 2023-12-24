@@ -37,6 +37,7 @@
                     <th>Foto</th>
                     <th>Nama</th>
                     <th>Link</th>
+                    <th>Ulasan</th>
                     <th>Biaya Masuk</th>
                     <th>Fasilitas</th>
                     <th>Wahana</th>
@@ -64,19 +65,28 @@
                     $wahanaArray = explode(",", $wahanaString);
                     $facilities = \App\Models\Fasilitas::whereIn('id', $fasilitasArray)->get();
                     $wahanas = \App\Models\Wahana::whereIn('id', $wahanaArray)->get();
-                    
+                    // dd($gambarArray);
+                    $url =$item->link_maps;
+                    $max_length = 15; // panjang maksimum string yang diinginkan
+
+                                      if (strlen($url) > $max_length) {
+                      $url = substr($url, 0, $max_length) . '...';
+                  }
+
+                  // echo $url;
             @endphp
                           @if(is_array($gambarArray))
-                        @foreach ($gambarArray as $image)
-                            <img class="img-fluid d-block" src="{{ asset('pantai/' . $image) }}" alt="{{ $image }}" width="100px">
-                        @endforeach
+                        {{-- @foreach ($gambarArray as $image) --}}
+                            <img class="img-fluid d-block" src="{{ asset('pantai/' . $gambarArray[0]) }}" alt="{{ $gambarArray[0] }}" width="100px" height="100px">
+                        {{-- @endforeach --}}
                     @else
-                        <img class="img-fluid d-block" src="{{ asset('pantai/' . $item->gambar) }}" alt="{{ $item->gambar }}" width="100px">
+                        <img class="img-fluid d-block" src="{{ asset('pantai/' . $item->gambar) }}" alt="{{ $item->gambar }}" width="100px" height="100px">
                     @endif
                        </td>
                         <td> {{ $item->nama}} </td>
-                        <td> {{ $item->link_maps }} </td>
-                        <td> {{ $item->biaya_masuk }} </td> 
+                        <td> {{ $url }} </td>
+                        <td> {{ $item->ulasan }} </td>
+                        <td> {{ number_format($item->biaya_masuk) }} </td> 
                         <td>  @foreach ($facilities as $index => $fas)
                           @php
                               $colorIndex = $index % count($colors); // Use modulo to cycle through colors

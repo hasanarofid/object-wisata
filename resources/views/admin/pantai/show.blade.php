@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
+@section('css')
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link rel="stylesheet" href="{{ asset('theme/assets/vendor/css/pages/ui-carousel.css') }}" />
+@endsection
+
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-2 mb-2"><span class="text-muted fw-light">Pantai /</span> Detail</h4>
     <div class="card ">
@@ -23,13 +28,18 @@ $fasilitasString = $model->fasilitas;
             <label for="html5-text-input" class="col-md-2 col-form-label">Gambar</label>
             <div class="col-md-1"> : </div>
             <div class="col-md-9">
-              @if(is_array($gambarArray))
-              @foreach ($gambarArray as $image)
-                  <img class="img-fluid d-block" src="{{ asset('pantai/' . $image) }}" alt="{{ $image }}" width="100px">
-              @endforeach
-          @else
-              <img class="img-fluid d-block" src="{{ asset('pantai/' . $model->gambar) }}" alt="{{ $model->gambar }}" width="100px">
-          @endif
+              <div class="swiper" id="swiper-with-pagination-2">
+                <div class="swiper-wrapper">
+                    @foreach ($gambarArray as $image)
+                    <div class="swiper-slide" style="background-image: url({{ asset('pantai/' . $image) }})">
+                        
+                      </div>
+
+                @endforeach
+
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
             </div>
           </div>
 
@@ -51,6 +61,15 @@ $fasilitasString = $model->fasilitas;
           </div>
 
           <div class="mb-3 row">
+            <label for="html5-text-input" class="col-md-2 col-form-label">Ulasan</label>
+            <div class="col-md-1"> : </div>
+
+            <div class="col-md-9">
+                <label class="col-form-label">{{ $model->ulasan}}</label>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
             <label for="html5-email-input" class="col-md-2 col-form-label">Latitude & Longitude</label>
             <div class="col-md-1"> : </div>
             <div class="col-md-9">
@@ -62,7 +81,7 @@ $fasilitasString = $model->fasilitas;
             <label for="html5-text-input" class="col-md-2 col-form-label">Biaya Masuk</label>
             <div class="col-md-1"> : </div>
             <div class="col-md-9">
-                <label class="col-form-label">{{ $model->biaya_masuk}}</label>
+                <label class="col-form-label">{{ number_format($model->biaya_masuk) }}</label>
             </div>
           </div>
           
@@ -112,5 +131,23 @@ $fasilitasString = $model->fasilitas;
       </div>
 
 </div>
+
+@endsection
+
+@section('script')
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+
+$(document).ready(function () {
+
+new Swiper("#swiper-with-pagination-2", {
+      slidesPerView: 'auto',
+      pagination: {
+        clickable: true,
+        el: '.swiper-pagination'
+      }
+    });
+    });
+</script>
 
 @endsection

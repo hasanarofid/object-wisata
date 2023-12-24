@@ -57,6 +57,7 @@ class PantaiController extends Controller
         $pantai = Pantai::create([
             'nama' => $request->nama,
             'link_maps' => $request->link_maps,
+            'ulasan' => $request->ulasan,
             'biaya_masuk' => $request->biaya_masuk,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -130,6 +131,7 @@ class PantaiController extends Controller
         // Meng-update atribut-atribut yang diinginkan
         $pantai->nama = $request->nama;
         $pantai->link_maps = $request->link_maps;
+        $pantai->ulasan = $request->ulasan;
         $pantai->biaya_masuk = $request->biaya_masuk;
         $pantai->latitude = $request->latitude;
         $pantai->longitude = $request->longitude;
