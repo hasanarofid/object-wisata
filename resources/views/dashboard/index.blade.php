@@ -175,6 +175,7 @@
                   </div>
                   <div class="col-auto"> <!-- Adjust the width based on your design -->
                     <button id="load-more" class="btn btn-primary"><i class="fa fa-angle-double-down"></i>  See More </button>
+                    <button id="load-less" class="btn btn-primary" style="display: none"><i class="fa fa-angle-double-up"></i>  See Less </button>
                   </div>
                   <div class="col-4">
                       <hr style="border-radius: 20px; height: 4px;">
@@ -285,7 +286,7 @@
                 <label for="html5-text-input" class="col-md-5 col-form-label">Biaya Masuk Maksimal</label>
                 <div class="col-md-7">
                   <div class="input-group">
-                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk  Maksimal" required>
+                    <input type="text" class="form-control" name="biaya_masuk" id="biaya_masuk" placeholder="Biaya Masuk  Maksimal" >
                     <div class="input-group-append">
                       <span class="input-group-text">Rp</span>
                     </div>
@@ -297,7 +298,7 @@
                 <label for="html5-search-input" class="col-md-5 col-form-label">Jarak Maksimal</label>
                 <div class="col-md-7">
                   <div class="input-group">
-                    <input type="text" class="form-control" name="jarak" id="jarak" placeholder="Jarak Maksimal" required>
+                    <input type="text" class="form-control" name="jarak" id="jarak" placeholder="Jarak Maksimal" >
                     <div class="input-group-append">
                       <span class="input-group-text">m</span>
                     </div>
@@ -308,7 +309,7 @@
               <div class="mb-3 row">
                 <label for="html5-email-input" class="col-md-5 col-form-label">Fasilitas Minimal</label>
                 <div class="col-md-7">
-                  <select name="fasilitas" id="fasilitas" class="form-control" required >
+                  <select name="fasilitas" id="fasilitas" class="form-control"  >
                     <option value="">.: Pilih :.</option>
                     <option value="Sangat Lengkap">Sangat Lengkap</option>
                     <option value="Lengkap">Lengkap</option>
@@ -333,7 +334,7 @@
               <div class="mb-3 row">
                 <label for="html5-tel-input" class="col-md-5 col-form-label">Waktu Operasional Minimal</label>
                 <div class="col-md-7">
-                  <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input" required>
+                  <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input" >
                 </div>
               </div>
               <div class="mb-3 row">
@@ -357,8 +358,8 @@
             
           </div>
           <div class="modal-footer">
-            </button>
-            <button type="submit" class="btn btn-primary">Cari</button>
+            <button type="submit" class="btn btn-warning" name="cari_tanpa_filter">Cari Tanpa Filter</button>
+            <button type="submit" class="btn btn-primary" name="cari">Cari</button>
           </div>
           </form>
         </div>
@@ -422,8 +423,8 @@ $('.rating').on('click', function(e) {
   $('#selected-rating').text(selectedRating.toFixed(1));
 
   // Validation: Check if rating is less than 3.5
-  if (selectedRating < 3.5) {
-    $('#error-message-container3').text('Rating harus lebih dari  3.5');
+  if (selectedRating > 4.2) {
+    $('#error-message-container3').text('Rating harus lebih dari  4.2');
     // Optionally, you can reset the selected rating
     // selectedRating = 0;
     // $('#selected-rating').text(selectedRating.toFixed(1));
@@ -512,11 +513,14 @@ function loadPantaiFromServer(userLatitude, userLongitude, numberOfPantai) {
             appendPantaiToUI(nearestPantai);
 
             // Show/hide the "See More" button based on the flag
+            console.log("hasMorePantai "+hasMorePantai);
             if (hasMorePantai) {
-                $('#load-more').show();
-            } else {
-                $('#load-more').hide();
-            }
+              $('#load-more').css('display', 'inline-block');
+              $('#load-less').css('display', 'none');
+          } else {
+              $('#load-more').css('display', 'none');
+              $('#load-less').css('display', 'inline-block');
+          }
         },
         error: function (error) {
             console.error('Error getting nearest Pantai:', error);
@@ -598,5 +602,9 @@ $('#load-more').on('click', function () {
     loadMorePantai();
 });
 
+$('#load-less').on('click', function () {
+    offset = 0; // Reset offset
+    loadPantaiFromServer($("#userLatitude").val(), $("#userLongitude").val(), displayedPantai);
+});
 </script>
 @endsection
