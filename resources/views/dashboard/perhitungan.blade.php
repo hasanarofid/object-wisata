@@ -271,90 +271,216 @@ $CR = calculateCR($CI, $RI);
         <td>{{ number_format($CR, 10, '.', '') }}</td>
     </tr>
 </table>
-<br>
-<h4>Perhitungan Alternatif</h4>
-@php
-$alternatives = App\Models\Alternatif::all();
-/// Langkah 1: Hitung nilai minimum dan maksimum untuk setiap kriteria
-$min_k1 = $alternatives->min('k1');
-$max_k1 = $alternatives->max('k1');
-
-$min_k2 = $alternatives->min('k2');
-$max_k2 = $alternatives->max('k2');
-
-$min_k3 = $alternatives->min('k3');
-$max_k3 = $alternatives->max('k3');
-
-$min_k4 = $alternatives->min('k4');
-$max_k4 = $alternatives->max('k4');
-
-$min_k5 = $alternatives->min('k5');
-$max_k5 = $alternatives->max('k5');
-
-$min_k6 = $alternatives->min('k6');
-$max_k6 = $alternatives->max('k6');
-
-// Langkah 2: Hitung skor R
-foreach ($alternatives as $alternative) {
-    $alternative->skorR_k1 = ($alternative->k1 - $min_k1) / ($max_k1 - $min_k1);
-    $alternative->skorR_k2 = ($alternative->k2 - $min_k2) / ($max_k2 - $min_k2);
-    $alternative->skorR_k3 = ($alternative->k3 - $min_k3) / ($max_k3 - $min_k3);
-    $alternative->skorR_k4 = ($alternative->k4 - $min_k4) / ($max_k4 - $min_k4);
-    $alternative->skorR_k5 = ($alternative->k5 - $min_k5) / ($max_k5 - $min_k5);
-    $alternative->skorR_k6 = ($alternative->k6 - $min_k6) / ($max_k6 - $min_k6);
-}
-
-// Langkah 3: Hitung total skor R
-$totalSkorR = $alternatives->sum('skorR_k1') + $alternatives->sum('skorR_k2') 
-+ $alternatives->sum('skorR_k3') + $alternatives->sum('skorR_k4') 
-+ $alternatives->sum('skorR_k5') + $alternatives->sum('skorR_k6') ;
-
-
-// Langkah 4: Hitung skor S dan skor Q
-foreach ($alternatives as $alternative) {
-    $alternative->skorS = ($alternative->skorR_k1 + $alternative->skorR_k2 
-    + $alternative->skorR_k3 + $alternative->skorR_k4
-    + $alternative->skorR_k5
-    + $alternative->skorR_k6) / $totalSkorR;
-    $alternative->skorQ = $alternative->skorS;
-}
-
-// Langkah 5: Hitung total skor Q
-$totalSkorQ = $alternatives->sum('skorQ');
-@endphp
-<div class="table-responsive">
-<table class="table table-bordered  ">
-    <thead class="text-center bg-success">
-        <tr>
-            <th>Skor R K1</th>
-            <th>Skor R K2</th>
-            <th>Skor R K3</th>
-            <th>Skor R K4</th>
-            <th>Skor R K5</th>
-            <th>Skor R K6</th>
-            <th>Skor S</th>
-            <th>Skor Q</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($alternatives->sortByDesc('skorQ') as $alternative)
+<h4>Perhitungan Vikor</h4>
+<div class="row g-0 table-responsive" >
+    <table class="table table-bordered  ">
+        <thead class="text-center bg-success">
             <tr>
-                <td>{{ $alternative->skorR_k1 }}</td>
-                <td>{{ $alternative->skorR_k2 }}</td>
-                <td>{{ $alternative->skorR_k3 }}</td>
-                <td>{{ $alternative->skorR_k4 }}</td>
-                <td>{{ $alternative->skorR_k5 }}</td>
-                <td>{{ $alternative->skorR_k6 }}</td>
-                <td>{{ $alternative->skorS }}</td>
-                <td>{{ $alternative->skorQ }}</td>
+                <th class="text-center vertical-center" rowspan="2">No</th>
+                <th class="text-center vertical-center" rowspan="2">Nama Pantai</th>
+                <th class="text-center vertical-center" colspan="6">Kriteria</th>
+              
             </tr>
-        @endforeach
-    </tbody>
-</table>
+            <tr>
+                <th class="text-center vertical-center">K1</th>
+                <th class="text-center vertical-center">K2</th>
+                <th class="text-center vertical-center">K3</th>
+                <th class="text-center vertical-center">K4</th>
+                <th class="text-center vertical-center">K5</th>
+                <th class="text-center vertical-center">K6</th>
 
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @php
+                $no = 1;
+                $pantaiVikor = App\Models\Alternatif::get();
+            @endphp
+           @foreach ($pantaiVikor as $item)
+           @php
+               $nama_pantai = App\Models\Pantai::find($item->pantai_id)->nama;
+        //        $datak1 = App\Models\Alternatif::pluck('k1');
+        //        if ($datak1->count() > 0) {
+        //     // Calculate minimum and maximum values
+        //     $minValue = $datak1->min();
+        //     $maxValue = $datak1->max();
+
+        //     // Output the results
+        //     echo "Minimum value: $minValue<br>";
+        //     echo "Maximum value: $maxValue<br>";
+        //     die;
+        // } else {
+        //     echo "No data found.";
+        // }
+        //        dd($datak1);die;
+           @endphp
+               
+                <tr>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $nama_pantai }}</td>
+                    <td>{{ $item->k1 }}</td>
+                    <td>{{ $item->k2 }}</td>
+                    <td>{{ $item->k3 }}</td>
+                    <td>{{ $item->k4 }}</td>
+                    <td>{{ $item->k5 }}</td>
+                    <td>{{ $item->k6 }}</td>
+                     
+                </tr>
+            @endforeach
+        </tbody>
+
+    </table>
+  
+  
 </div>
 
-                    <h4>Hasil Perhitungan Pantai dengan AHP</h4>
+<h4>Perhitungan Vikor | Kriteria dan Bobot</h4>
+<div class="row g-0 table-responsive" >
+    <table class="table table-bordered  ">
+        <thead class="text-center bg-success">
+            <tr>
+                <th class="text-center vertical-center" rowspan="2">Kriteria</th>
+                <th class="text-center vertical-center" rowspan="2">Deskripsi</th>
+                <th class="text-center vertical-center" colspan="6">Bobot</th>
+              
+            </tr>
+           
+        </thead>
+
+        <tbody>
+            @php
+                $datakriterabobot = [
+            //1 
+            [
+                'kriteria' => 'K1',
+                'des' => 'Biaya masuk (Rp.)',
+                'bobot' => '0,336183550247864',
+            ],
+             //1 
+             [
+                'kriteria' => 'K2',
+                'des' => 'Jarak (m)',
+                'bobot' => '0,0470980836871406',
+            ],
+             //1 
+             [
+                'kriteria' => 'K3',
+                'des' => 'Fasilitas',
+                'bobot' => '0,0885616469722326',
+            ],
+             //1 
+             [
+                'kriteria' => 'K4',
+                'des' => 'Wahana',
+                'bobot' => '0,336183550247864',
+            ],
+             //1 
+             [
+                'kriteria' => 'K5',
+                'des' => 'Waktu Operasional',
+                'bobot' => '0,0259660033663952',
+            ],
+             //1 
+             [
+                'kriteria' => 'K6',
+                'des' => 'Ulasan',
+                'bobot' => '0,166007165478504',
+            ],
+        ];
+
+            @endphp
+            
+               @foreach ($datakriterabobot as $item)
+               <tr>
+                <td>{{ $item['kriteria'] }}</td>
+                <td>{{ $item['des'] }}</td>
+                <td>{{ $item['bobot'] }}</td>
+               </tr>
+               @endforeach
+        </tbody>
+
+    </table>
+  
+  
+</div>
+<h4>Nilai terbaik dan terburuk setiap Kriteria</h4>
+
+<div class="row g-0 table-responsive" >
+    <table class="table table-bordered  ">
+        <thead class="text-center bg-success">
+            <tr>
+                <th class="text-center vertical-center">Kriteria</th>
+                <th class="text-center vertical-center">Tipe Kriteria</th>
+                <th class="text-center vertical-center">Xj+</th>
+                <th class="text-center vertical-center">Xj-</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @php
+            $datater = [
+                
+                    [
+                'kriteria' => 'K1',
+                'des' => 'Cost',
+                'min' => '5000',
+                'max' => '40000',
+            ],
+            [
+                'kriteria' => 'K2',
+                'des' => 'Benefit',
+                'min' => '11700',
+                'max' => '21000',
+            ],
+            [
+                'kriteria' => 'K3',
+                'des' => 'Benefit',
+                'min' => '3',
+                'max' => '1',
+            ],
+            [
+                'kriteria' => 'K4',
+                'des' => 'Benefit',
+                'min' => '3',
+                'max' => '1',
+            ],
+            [
+                'kriteria' => 'K5',
+                'des' => 'Benefit',
+                'min' => '24',
+                'max' => '8',
+            ],
+            [
+                'kriteria' => 'K6',
+                'des' => 'Benefit',
+                'min' => '4.2',
+                'max' => '3.5',
+            ],
+                
+        ];
+                $no = 1;
+            @endphp
+           @foreach ($datater as $item)
+           <tr>
+            <td>{{ $item['kriteria'] }}</td>
+            <td>{{ $item['des'] }}</td>
+            <td>{{ $item['min'] }}</td>
+            <td>{{ $item['max'] }}</td>
+           </tr>
+           @endforeach
+        </tbody>
+
+    </table>
+  
+  
+</div>
+
+
+
+                    <h4>Hasil Perhitungan Pantai dengan AHP & VIKOR</h4>
 
                     <div class="row g-0 table-responsive" >
                         <table class="table table-bordered  ">
@@ -373,6 +499,8 @@ $totalSkorQ = $alternatives->sum('skorQ');
 
                             <tbody>
                                 @php
+
+
                                     $no = 1;
                                 @endphp
                                @foreach ($datapantai as $item)

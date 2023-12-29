@@ -90,60 +90,60 @@ class DashboardController extends Controller
         }
         
         //update alternatif$
-        $alternatif = Alternatif::get();
+        // $alternatif = Alternatif::get();
         
 
-        $min_k1 = $alternatif->min('k1');
-        $max_k1 = $alternatif->max('k1');
+        // $min_k1 = $alternatif->min('k1');
+        // $max_k1 = $alternatif->max('k1');
 
-        $min_k2 = $alternatif->min('k2');
-        $max_k2 = $alternatif->max('k2');
+        // $min_k2 = $alternatif->min('k2');
+        // $max_k2 = $alternatif->max('k2');
 
-        $min_k3 = $alternatif->min('k3');
-        $max_k3 = $alternatif->max('k3');
+        // $min_k3 = $alternatif->min('k3');
+        // $max_k3 = $alternatif->max('k3');
 
-        $min_k4 = $alternatif->min('k4');
-        $max_k4 = $alternatif->max('k4');
+        // $min_k4 = $alternatif->min('k4');
+        // $max_k4 = $alternatif->max('k4');
 
-        $min_k5 = $alternatif->min('k5');
-        $max_k5 = $alternatif->max('k5');
+        // $min_k5 = $alternatif->min('k5');
+        // $max_k5 = $alternatif->max('k5');
 
-        $min_k6 = $alternatif->min('k6');
-        $max_k6 = $alternatif->max('k6');
+        // $min_k6 = $alternatif->min('k6');
+        // $max_k6 = $alternatif->max('k6');
 
-        // Langkah 2: Hitung skor R
-        foreach ($alternatif as $alternative) {
-            $alternative->skorR_k1 = ($alternative->k1 - $min_k1) / ($max_k1 - $min_k1);
-            $alternative->skorR_k2 = ($alternative->k2 - $min_k2) / ($max_k2 - $min_k2);
-            $alternative->skorR_k3 = ($alternative->k3 - $min_k3) / ($max_k3 - $min_k3);
-            $alternative->skorR_k4 = ($alternative->k4 - $min_k4) / ($max_k4 - $min_k4);
-            $alternative->skorR_k5 = ($alternative->k5 - $min_k5) / ($max_k5 - $min_k5);
-            $alternative->skorR_k6 = ($alternative->k6 - $min_k6) / ($max_k6 - $min_k6);
-        }
+        // // Langkah 2: Hitung skor R
+        // foreach ($alternatif as $alternative) {
+        //     $alternative->skorR_k1 = ($alternative->k1 - $min_k1) / ($max_k1 - $min_k1);
+        //     $alternative->skorR_k2 = ($alternative->k2 - $min_k2) / ($max_k2 - $min_k2);
+        //     $alternative->skorR_k3 = ($alternative->k3 - $min_k3) / ($max_k3 - $min_k3);
+        //     $alternative->skorR_k4 = ($alternative->k4 - $min_k4) / ($max_k4 - $min_k4);
+        //     $alternative->skorR_k5 = ($alternative->k5 - $min_k5) / ($max_k5 - $min_k5);
+        //     $alternative->skorR_k6 = ($alternative->k6 - $min_k6) / ($max_k6 - $min_k6);
+        // }
 
-        $totalSkorR = $alternatif->sum('skorR');
+        // $totalSkorR = $alternatif->sum('skorR');
 
-        // Perbarui setiap alternatif dengan skorR baru
-        foreach ($alternatif as $alternative) {
-            $alternative->skorS = ($alternative->skorR_k1 + $alternative->skorR_k2 
-                + $alternative->skorR_k3 + $alternative->skorR_k4
-                + $alternative->skorR_k5 + $alternative->skorR_k6) / $totalSkorR;
+        // // Perbarui setiap alternatif dengan skorR baru
+        // foreach ($alternatif as $alternative) {
+        //     $alternative->skorS = ($alternative->skorR_k1 + $alternative->skorR_k2 
+        //         + $alternative->skorR_k3 + $alternative->skorR_k4
+        //         + $alternative->skorR_k5 + $alternative->skorR_k6) / $totalSkorR;
         
-            $alternative->skorQ = $alternative->skorS;
-        }
+        //     $alternative->skorQ = $alternative->skorS;
+        // }
         
-        // Hitung total skorQ
-        $totalSkorQ = $alternatif->sum('skorQ');
+        // // Hitung total skorQ
+        // $totalSkorQ = $alternatif->sum('skorQ');
         
         // Perbarui setiap alternatif dengan skorQ baru
-        foreach ($alternatif as $alternative) {
-            $update2 = Alternatif::where('id', $alternative['id'])
-                ->update([
-                    'skorR' => $totalSkorR,
-                    'skorS' => $alternative->skorS,
-                    'skorQ' => $alternative->skorQ,
-                ]);
-        }
+        // foreach ($alternatif as $alternative) {
+        //     $update2 = Alternatif::where('id', $alternative['id'])
+        //         ->update([
+        //             'skorR' => $totalSkorR,
+        //             'skorS' => $alternative->skorS,
+        //             'skorQ' => $alternative->skorQ,
+        //         ]);
+        // }
         // Langkah 5: Hitung total skor Q
        
 

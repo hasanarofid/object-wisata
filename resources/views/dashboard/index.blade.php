@@ -175,7 +175,7 @@
                   </div>
                   <div class="col-auto"> <!-- Adjust the width based on your design -->
                     <button id="load-more" class="btn btn-primary"><i class="fa fa-angle-double-down"></i>  See More </button>
-                    <button id="load-less" class="btn btn-primary" style="display: none"><i class="fa fa-angle-double-up"></i>  See Less </button>
+                    {{-- <button id="load-less" class="btn btn-primary" ><i class="fa fa-angle-double-up"></i>  See Less </button> --}}
                   </div>
                   <div class="col-4">
                       <hr style="border-radius: 20px; height: 4px;">
@@ -321,7 +321,7 @@
               <div class="mb-3 row">
                 <label for="html5-url-input" class="col-md-5 col-form-label">Wahana Minimal</label>
                 <div class="col-md-7">
-                  <select name="wahana" id="wahana" class="form-control" required >
+                  <select name="wahana" id="wahana" class="form-control"  >
                     <option value="">.: Pilih :.</option>
                     <option value="Sangat Lengkap">Sangat Lengkap</option>
                     <option value="Lengkap">Lengkap</option>
