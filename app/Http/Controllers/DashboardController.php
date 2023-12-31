@@ -168,23 +168,23 @@ class DashboardController extends Controller
                     // Convert the numeric string to an integer
                     $k1 = (int) $numericString;
 
-                    $query->where('k1', '>', $k1);
+                    $query->where('k1', '<=', $k1);
                 }
 
                 if (!empty($request->jarak)) {
-                    $query->where('k2', '>', (int)$request->jarak);
+                    $query->where('k2', '<=', (int)$request->jarak);
                 }
 
                 if (!empty($request->fasilitas)) {
                     switch ($request->fasilitas) {
                         case 'Sangat Lengkap':
-                            $query->whereBetween('k3', [7,8,9, 10]);
+                            $query->where('k3', '=', '3');
                             break;
                         case 'Lengkap':
-                            $query->whereBetween('k3', [5, 6]);
+                            $query->whereBetween('k3', [2, 3]);
                             break;
                         case 'Kurang Lengkap':
-                            $query->whereBetween('k3', [0,1,2,3, 4]);
+                            $query->whereBetween('k3', [1, 3]);
                             break;
                         default:
                             // Handle other cases or provide a default behavior
@@ -194,14 +194,14 @@ class DashboardController extends Controller
 
                 if (!empty($request->wahana)) {
                     switch ($request->wahana) {
-                        case 'Sangat Lengkap':
-                            $query->whereBetween('k4', [5, 6]);
-                            break;
                         case 'Lengkap':
-                            $query->whereBetween('k4', [3,4]);
+                            $query->where('k4', '=', '3');
                             break;
                         case 'Kurang Lengkap':
-                            $query->whereBetween('k4', [0,1]);
+                            $query->whereBetween('k4', [2, 3]);
+                            break;
+                        case 'Tidak Ada':
+                            $query->whereBetween('k4', [1, 3]);
                             break;
                         default:
                             // Handle other cases or provide a default behavior
@@ -211,13 +211,13 @@ class DashboardController extends Controller
                 
 
                 if (!empty($request->waktu_operasional)) {
-                    $jamOperasional = intval($request->waktu_operasional);
+                    // $jamOperasional = intval($request->waktu_operasional);
                     // dd($jamOperasional);
-                    $query->where('k5', '<', $jamOperasional);
+                    $query->where('k5', '>=', (int)$request->waktu_operasional);
                 }
 
                 if(!empty($request->rating)) {
-                    $query->where('k6', '>', $request->rating);
+                    $query->where('k6', '>=', $request->rating);
                 }
             // Handle search with filter
             $results = $query->get();
@@ -467,7 +467,7 @@ class DashboardController extends Controller
 
         return view('dashboard.perhitungan',compact('datapantai','kriteria','alternatif','data'));
     }
-
+    
    
 
     // sendfeed

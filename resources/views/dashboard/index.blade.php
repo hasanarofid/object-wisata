@@ -323,9 +323,9 @@
                 <div class="col-md-7">
                   <select name="wahana" id="wahana" class="form-control"  >
                     <option value="">.: Pilih :.</option>
-                    <option value="Sangat Lengkap">Sangat Lengkap</option>
                     <option value="Lengkap">Lengkap</option>
                     <option value="Kurang Lengkap">Kurang Lengkap</option>
+                    <option value="Tidak Ada">Tidak Ada</option>
 
                   </select>
 
@@ -334,7 +334,13 @@
               <div class="mb-3 row">
                 <label for="html5-tel-input" class="col-md-5 col-form-label">Waktu Operasional Minimal</label>
                 <div class="col-md-7">
-                  <input class="form-control" type="time"  name="waktu_operasional" id="html5-time-input" >
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="waktu_operasional" id="waktu_operasional" placeholder="Waktu Operasional Minimal">
+                    <div class="input-group-append">
+                      <span class="input-group-text">jam</span>
+                    </div>
+                  </div>
+                  <div id="error-message-container4" class="error-message" style="color:red"></div>
                 </div>
               </div>
               <div class="mb-3 row">
@@ -424,7 +430,7 @@ $('.rating').on('click', function(e) {
 
   // Validation: Check if rating is less than 3.5
   if (selectedRating > 4.2) {
-    $('#error-message-container3').text('Rating harus lebih dari  4.2');
+    $('#error-message-container3').text('Rating harus kurang dari  4.2');
     // Optionally, you can reset the selected rating
     // selectedRating = 0;
     // $('#selected-rating').text(selectedRating.toFixed(1));
@@ -444,8 +450,8 @@ $('.rating').on('click', function(e) {
         var numericValue = parseInt(inputVal.replace(/[^\d]/g, ''));
         var errorContainer = $('#error-message-container');
 
-        if (numericValue < 8000) {
-          errorContainer.text('Biaya tidak boleh kurang dari 8000').show();
+        if (numericValue < 5000) {
+          errorContainer.text('Biaya tidak boleh kurang dari 5000').show();
         } else {
           errorContainer.hide().text('');
         }
@@ -461,6 +467,21 @@ $('.rating').on('click', function(e) {
 
         if (isNaN(numericValue) || numericValue < 1000) {
           errorContainer.text('Jarak minimal 1000 meter').show();
+        } else {
+          errorContainer.hide().text('');
+        }
+      });
+
+      $('#waktu_operasional').on('input', function() {
+        var inputValue = $(this).val().replace(/[^\d]/g, ''); // Hapus karakter selain angka
+        $(this).val(inputValue);
+
+        // Validasi minimal 1000
+        var numericValue = parseInt(inputValue);
+        var errorContainer = $('#error-message-container4');
+
+        if (isNaN(numericValue) || numericValue > 24) {
+          errorContainer.text('Waktu Operasional harus kurang dari 24 jam').show();
         } else {
           errorContainer.hide().text('');
         }
