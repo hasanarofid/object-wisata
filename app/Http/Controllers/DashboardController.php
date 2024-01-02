@@ -156,7 +156,7 @@ class DashboardController extends Controller
         // $alternatif = Alternatif::get();
 
         // $ranking = $alternatif->sortByDesc('skorQ');
-        $query = Alternatif::orderByDesc('skorQ');
+        $query = Alternatif::orderBy('skorQ', 'asc');
         // dd($request->has('cari_tanpa_filter'));
         if ($request->has('cari_tanpa_filter')) {
             $results = $query->get();
@@ -383,67 +383,73 @@ class DashboardController extends Controller
         $alternatif = Alternatif::get();
         $kriteria = Kriteria::get();
         // $ranking = $alternatif->sortByDesc('skorQ');
-        $query = Alternatif::orderByDesc('skorQ');
+        $query = Alternatif::orderBy('skorQ', 'asc');
+       
+        if ($request->has('cari_tanpa_filter')) {
+            $results = $query->get();
+            // Handle search without filter
+        } elseif ($request->has('cari')) {
+             if (!empty($request->biaya_masuk)) {
+                    $numericString = preg_replace('/[^0-9]/', '', $request->biaya_masuk);
 
-        if (!empty($request->biaya_masuk)) {
-            $numericString = preg_replace('/[^0-9]/', '', $request->biaya_masuk);
+                    // Convert the numeric string to an integer
+                    $k1 = (int) $numericString;
 
-            // Convert the numeric string to an integer
-            $k1 = (int) $numericString;
+                    $query->where('k1', '<=', $k1);
+                }
 
-            $query->where('k1', '>', $k1);
+                if (!empty($request->jarak)) {
+                    $query->where('k2', '<=', (int)$request->jarak);
+                }
+
+                if (!empty($request->fasilitas)) {
+                    switch ($request->fasilitas) {
+                        case 'Sangat Lengkap':
+                            $query->where('k3', '=', '3');
+                            break;
+                        case 'Lengkap':
+                            $query->whereBetween('k3', [2, 3]);
+                            break;
+                        case 'Kurang Lengkap':
+                            $query->whereBetween('k3', [1, 3]);
+                            break;
+                        default:
+                            // Handle other cases or provide a default behavior
+                            break;
+                    }
+                }
+
+                if (!empty($request->wahana)) {
+                    switch ($request->wahana) {
+                        case 'Lengkap':
+                            $query->where('k4', '=', '3');
+                            break;
+                        case 'Kurang Lengkap':
+                            $query->whereBetween('k4', [2, 3]);
+                            break;
+                        case 'Tidak Ada':
+                            $query->whereBetween('k4', [1, 3]);
+                            break;
+                        default:
+                            // Handle other cases or provide a default behavior
+                            break;
+                    }
+                }
+                
+
+                if (!empty($request->waktu_operasional)) {
+                    // $jamOperasional = intval($request->waktu_operasional);
+                    // dd($jamOperasional);
+                    $query->where('k5', '>=', (int)$request->waktu_operasional);
+                }
+
+                if(!empty($request->rating)) {
+                    $query->where('k6', '>=', $request->rating);
+                }
+            // Handle search with filter
+            $results = $query->get();
+
         }
-
-        if (!empty($request->jarak)) {
-            $query->where('k2', '>', (int)$request->jarak);
-        }
-
-        if (!empty($request->fasilitas)) {
-            switch ($request->fasilitas) {
-                case 'Sangat Lengkap':
-                    $query->whereBetween('k3', [7,8,9, 10]);
-                    break;
-                case 'Lengkap':
-                    $query->whereBetween('k3', [5, 6]);
-                    break;
-                case 'Kurang Lengkap':
-                    $query->whereBetween('k3', [0,1,2,3, 4]);
-                    break;
-                default:
-                    // Handle other cases or provide a default behavior
-                    break;
-            }
-        }
-
-        if (!empty($request->wahana)) {
-            switch ($request->wahana) {
-                case 'Sangat Lengkap':
-                    $query->whereBetween('k4', [5, 6]);
-                    break;
-                case 'Lengkap':
-                    $query->whereBetween('k4', [3,4]);
-                    break;
-                case 'Kurang Lengkap':
-                    $query->whereBetween('k4', [0,1]);
-                    break;
-                default:
-                    // Handle other cases or provide a default behavior
-                    break;
-            }
-        }
-        
-
-        if (!empty($request->waktu_operasional)) {
-            $jamOperasional = intval($request->waktu_operasional);
-            // dd($jamOperasional);
-            $query->where('k5', '<=', $jamOperasional);
-        }
-
-        if(!empty($request->rating)) {
-            $query->where('k6', '<=', $request->rating);
-        }
-        
-        $results = $query->get();
     
        $no = 1;
         foreach($results as $value){

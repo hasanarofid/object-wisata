@@ -53,6 +53,7 @@
                       
                     </div>
                     @php
+                    
                        $ahpMatrix = App\AhpMatrix::all()->toArray();
                         // dd($ahpmatrik);
                     @endphp

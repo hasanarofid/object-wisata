@@ -364,7 +364,7 @@
             
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-warning" name="cari_tanpa_filter">Cari Tanpa Filter</button>
+            <button type="submit" class="btn btn-warning" value="true" name="cari_tanpa_filter">Cari Tanpa Filter</button>
             <button type="submit" class="btn btn-primary" name="cari">Cari</button>
           </div>
           </form>

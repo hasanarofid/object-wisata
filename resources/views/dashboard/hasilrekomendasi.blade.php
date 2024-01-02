@@ -28,6 +28,7 @@
                     <div class="row">
                         <div class="col-6 mt-2 mb-2" style="text-align: left;">
                             <h4>Tabel Perhitungan</h4>
+                            {{-- {{ dd(request()->all()) }} --}}
                             <!-- Your content goes here -->
                         </div>
                         <div style="text-align: right;" class="col-6 text-right mt-2 ml-10 mb-2">
